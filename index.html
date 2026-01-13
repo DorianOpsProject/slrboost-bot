@@ -9,473 +9,162 @@
   <!-- Telegram Mini App SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-  <style>
-    :root{
-      --bg:#0b0d12;
-      --panel:#101522;
-      --card:#0f1627;
-      --stroke:rgba(255,255,255,.08);
-      --text:#eaf0ff;
-      --muted:rgba(234,240,255,.68);
-      --accent:#ffd400;
-      --accent2:#ffb800;
-      --danger:#ff4d4d;
-      --ok:#2ee59d;
-      --shadow: 0 18px 50px rgba(0,0,0,.45);
-      --radius:18px;
-      --radius2:14px;
-      --blur: 14px;
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-    }
+ <style>
+:root{
+  --bg:#0b0d12;
+  --panel:#101522;
+  --card:#0f1627;
+  --stroke:rgba(255,255,255,.08);
+  --text:#eaf0ff;
+  --muted:rgba(234,240,255,.68);
+  --accent:#ffd400;
+  --accent2:#ffb800;
+  --danger:#ff4d4d;
+  --ok:#2ee59d;
+  --shadow: 0 18px 50px rgba(0,0,0,.45);
+  --radius:18px;
+  --radius2:14px;
+  --blur:14px;
+  --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+}
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:var(--font);
-      background:
-        radial-gradient(1100px 600px at 20% -10%, rgba(255,212,0,.18), transparent 55%),
-        radial-gradient(900px 500px at 90% 10%, rgba(255,184,0,.12), transparent 50%),
-        radial-gradient(800px 450px at 50% 110%, rgba(120,180,255,.12), transparent 60%),
-        var(--bg);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
+*{box-sizing:border-box}
+html,body{height:100%}
 
-    a{color:inherit}
-    .wrap{
-      max-width:1080px;
-      margin:0 auto;
-      padding: 18px 16px 110px;
-    }
-    /* ✅ FIX : le blur du header n'empiète plus sur le 1er produit */
+body{
+  margin:0;
+  font-family:var(--font);
+  background:
+    radial-gradient(1100px 600px at 20% -10%, rgba(255,212,0,.18), transparent 55%),
+    radial-gradient(900px 500px at 90% 10%, rgba(255,184,0,.12), transparent 50%),
+    radial-gradient(800px 450px at 50% 110%, rgba(120,180,255,.12), transparent 60%),
+    var(--bg);
+  color:var(--text);
+}
+
+a{color:inherit}
+
+.wrap{
+  max-width:1080px;
+  margin:0 auto;
+  padding:18px 16px 110px;
+}
+
+/* ================= HEADER FIXE STABLE ================= */
+
+.topbar{
+  position:fixed;              /* 🔒 plus de sticky */
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  padding:10px 0 12px;
+  background:rgba(11,13,18,.98); /* fond plein = pas de glitch */
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
 .topbar .wrap{
-  padding-bottom: 16px !important; /* enlève le 110px dans le header */
+  padding-bottom:16px;
 }
 
-    /* Header */
-   .topbar{
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  padding: 10px 0 12px;
-  background: rgba(11,13,18,.96); /* 🔒 fond solide */
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  will-change: transform;
-  transform: translateZ(0);
+/* ================= CONTENU ================= */
+
+/* le contenu commence SOUS le header */
+main.wrap{
+  padding-top:280px;  /* ajuste 260–300 si besoin */
 }
-    .topbar::after{
-  content:"";
-  position:absolute;
-  left:0; right:0; bottom:-12px;
-  height:12px;
-  background: linear-gradient(to bottom, rgba(11,13,18,.92), rgba(11,13,18,0));
-  pointer-events:none;
+
+/* ================= UI ================= */
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
-.topbar{ position: sticky; }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .logo{
-      width:44px;height:44px;border-radius:14px;
-      display:grid;place-items:center;
-      background: linear-gradient(135deg, rgba(255,212,0,.95), rgba(255,184,0,.85));
-      color:#0b0d12;
-      box-shadow: 0 10px 30px rgba(255,212,0,.15);
-      font-weight:900;
-      letter-spacing:.5px;
-    }
-    .title h1{
-      margin:0;
-      font-size: 18px;
-      line-height: 1.05;
-      letter-spacing: .2px;
-    }
-    .title p{
-      margin:4px 0 0;
-      color:var(--muted);
-      font-size: 13px;
-    }
 
-    .gridHeader{
-      margin-top: 14px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    .controls{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    @media(min-width:780px){
-      .gridHeader{
-        grid-template-columns: 1.35fr .65fr;
-        align-items: start;
-      }
-      .controls{
-        grid-template-columns: 1fr 280px;
-      }
-    }
-
-    .search{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding: 12px 14px;
-      border:1px solid var(--stroke);
-      background: rgba(16,21,34,.65);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .search input{
-      width:100%;
-      border:none;
-      outline:none;
-      background:transparent;
-      color:var(--text);
-      font-size: 14px;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--stroke);
-      background: rgba(16,21,34,.6);
-      color: var(--muted);
-      font-size: 13px;
-      cursor:pointer;
-      user-select:none;
-      transition: .18s ease;
-      white-space:nowrap;
-    }
-    .pill:hover{transform: translateY(-1px); color:var(--text)}
-    .pill.active{
-      color:#0b0d12;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border-color: rgba(255,212,0,.55);
-      box-shadow: 0 10px 30px rgba(255,212,0,.16);
-    }
-
-    .categories{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    /* Cards */
-    .cards{
-      margin-top: 14px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    @media(min-width:640px){
-      .cards{grid-template-columns: 1fr 1fr}
-    }
-    @media(min-width:980px){
-      .cards{grid-template-columns: 1fr 1fr 1fr}
-    }
-
-    .card{
-      border-radius: var(--radius);
-      border:1px solid var(--stroke);
-      background: rgba(15,22,39,.72);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-      transition: .18s ease;
-    }
-    .card:hover{transform: translateY(-2px)}
-    .card::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(500px 240px at 15% 0%, rgba(255,212,0,.12), transparent 60%);
-      pointer-events:none;
-    }
-    .cardInner{
-      position:relative;
-      padding: 14px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      min-height: 210px;
-    }
-
-    .tagrow{
-      display:flex; gap:8px; flex-wrap:wrap;
-      align-items:center;
-    }
-    .tag{
-      font-size:12px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background: rgba(16,21,34,.55);
-      color: var(--muted);
-    }
-    .tag.accent{
-      color:#0b0d12;
-      background: rgba(255,212,0,.92);
-      border-color: rgba(255,212,0,.35);
-      font-weight:700;
-    }
-
-    .card h3{
-      margin:0;
-      font-size: 16px;
-      letter-spacing:.2px;
-    }
-    .desc{
-      margin:0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .meta{
-      margin-top:auto;
-      display:flex;
-      gap:10px;
-      align-items:flex-end;
-      justify-content:space-between;
-    }
-    .ref{
-      color: rgba(234,240,255,.85);
-      font-size: 13px;
-      padding: 8px 10px;
-      border:1px dashed rgba(255,255,255,.16);
-      border-radius: 12px;
-      background: rgba(16,21,34,.35);
-    }
-    .price{
-      font-weight: 900;
-      font-size: 16px;
-      letter-spacing: .2px;
-    }
-    .price small{
-      color:var(--muted);
-      font-weight:600;
-      font-size: 12px;
-      margin-left: 6px;
-    }
-
-    .actions{
-      display:flex;
-      gap:10px;
-      margin-top: 10px;
-    }
-    .btn{
-      border:none;
-      outline:none;
-      cursor:pointer;
-      border-radius: 14px;
-      padding: 12px 12px;
-      font-weight: 800;
-      font-size: 14px;
-      transition: .18s ease;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      user-select:none;
-    }
-    .btn:active{transform: scale(.99)}
-    .btn.secondary{
-      background: rgba(16,21,34,.65);
-      border:1px solid var(--stroke);
-      color: var(--text);
-      flex: 1;
-    }
-    .btn.primary{
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color:#0b0d12;
-      flex: 1;
-      box-shadow: 0 16px 40px rgba(255,212,0,.14);
-    }
-    .btn.danger{
-      background: rgba(255,77,77,.12);
-      border:1px solid rgba(255,77,77,.25);
-      color: rgba(255,200,200,.95);
-    }
-
-    /* Drawer Cart */
-    .drawerOverlay{
-      position:fixed; inset:0;
-      background: rgba(0,0,0,.55);
-      backdrop-filter: blur(8px);
-      display:none;
-      z-index: 60;
-    }
-    .drawer{
-      position:fixed;
-      right:0; top:0; bottom:0;
-      width:min(420px, 94vw);
-      background: rgba(10,12,16,.92);
-      border-left: 1px solid var(--stroke);
-      box-shadow: -20px 0 60px rgba(0,0,0,.55);
-      transform: translateX(105%);
-      transition: .22s ease;
-      z-index: 61;
-      display:flex;
-      flex-direction:column;
-    }
-    .drawerHeader{
-      padding: 14px 14px 10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      border-bottom: 1px solid var(--stroke);
-    }
-    .drawerHeader h2{
-      margin:0;
-      font-size: 16px;
-      letter-spacing:.2px;
-    }
-    .drawerBody{
-      padding: 12px 14px;
-      overflow:auto;
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .line{
-      border:1px solid var(--stroke);
-      border-radius: 16px;
-      background: rgba(16,21,34,.6);
-      padding: 12px;
-      display:grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      align-items:center;
-    }
-    .lineTitle{
-      font-weight: 800;
-      font-size: 14px;
-      margin:0;
-    }
-    .lineSub{
-      margin:4px 0 0;
-      color:var(--muted);
-      font-size: 12px;
-    }
-    .qty{
-      display:flex; align-items:center; gap:8px;
-    }
-    .qty button{
-      width:34px; height:34px;
-      border-radius: 12px;
-      border:1px solid var(--stroke);
-      background: rgba(10,12,16,.35);
-      color: var(--text);
-      cursor:pointer;
-      font-weight:900;
-    }
-    .qty span{
-      width: 26px;
-      text-align:center;
-      font-weight:900;
-    }
-
-    .drawerFooter{
-      border-top: 1px solid var(--stroke);
-      padding: 12px 14px 16px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .totals{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      color:var(--muted);
-      font-size: 13px;
-    }
-    .totals strong{
-      color:var(--text);
-      font-size: 16px;
-    }
-
-    /* Bottom bar */
-    .bottombar{
-      position: fixed;
-      left:0; right:0; bottom:0;
-      z-index: 50;
-      padding: 12px 14px 16px;
-      backdrop-filter: blur(var(--blur));
-      background: linear-gradient(to top, rgba(11,13,18,.92), rgba(11,13,18,.55), transparent);
-    }
-    .barInner{
-      max-width:1080px;
-      margin:0 auto;
-      display:flex;
-      gap:10px;
-      align-items:center;
-    }
-    .cartBtn{
-      flex: 1;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding: 12px 14px;
-      border-radius: 18px;
-      border:1px solid var(--stroke);
-      background: rgba(16,21,34,.65);
-      box-shadow: var(--shadow);
-      cursor:pointer;
-      user-select:none;
-    }
-    .cartLeft{
-      display:flex; flex-direction:column; gap:2px;
-    }
-    .cartLeft .t1{font-weight:900; letter-spacing:.2px}
-    .cartLeft .t2{color:var(--muted); font-size: 12px}
-    .badge{
-      min-width: 34px;
-      height: 34px;
-      border-radius: 12px;
-      display:grid;
-      place-items:center;
-      font-weight: 900;
-      color:#0b0d12;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border: 1px solid rgba(255,212,0,.35);
-    }
-
-    .note{
-      margin-top: 14px;
-      border: 1px solid rgba(255,212,0,.18);
-      background: rgba(255,212,0,.06);
-      border-radius: var(--radius);
-      padding: 12px 14px;
-      color: rgba(234,240,255,.82);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .sr-only{
-      position:absolute;
-      width:1px;height:1px;
-      padding:0;margin:-1px;
-      overflow:hidden;clip:rect(0,0,0,0);
-      white-space:nowrap;border:0;
-    }
-    /* ✅ Empêche les cartes de passer sous le header */
-main.wrap {
-  padding-top: 12px;
+.logo{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#0b0d12;
+  font-weight:900;
 }
-  </style>
+
+.title h1{
+  margin:0;
+  font-size:18px;
+}
+
+.title p{
+  margin:4px 0 0;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.gridHeader{
+  margin-top:14px;
+  display:grid;
+  gap:12px;
+}
+
+.search{
+  display:flex;
+  gap:10px;
+  padding:12px 14px;
+  border-radius:18px;
+  background:rgba(16,21,34,.65);
+  border:1px solid var(--stroke);
+}
+
+.search input{
+  width:100%;
+  border:none;
+  background:none;
+  color:var(--text);
+}
+
+.categories{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.cards{
+  margin-top:14px;
+  display:grid;
+  gap:12px;
+}
+
+.card{
+  border-radius:var(--radius);
+  border:1px solid var(--stroke);
+  background:rgba(15,22,39,.72);
+  box-shadow:var(--shadow);
+}
+
+.cardInner{
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* ================= BOTTOM BAR ================= */
+
+.bottombar{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:50;
+  padding:12px 14px 16px;
+  background:rgba(11,13,18,.98);
+  border-top:1px solid rgba(255,255,255,.06);
+}
+</style>
 </head>
 
 <body>
