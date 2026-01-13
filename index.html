@@ -56,13 +56,24 @@
 
     /* Header */
     .topbar{
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      padding: 10px 0 12px;
-      backdrop-filter: blur(var(--blur));
-      background: linear-gradient(to bottom, rgba(11,13,18,.85), rgba(11,13,18,.35), transparent);
-    }
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  padding: 10px 0 12px;
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+  background: rgba(11,13,18,.92); /* ✅ opaque */
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+    .topbar::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-12px;
+  height:12px;
+  background: linear-gradient(to bottom, rgba(11,13,18,.92), rgba(11,13,18,0));
+  pointer-events:none;
+}
+.topbar{ position: sticky; }
     .brand{
       display:flex;
       align-items:center;
