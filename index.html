@@ -55,15 +55,16 @@
 }
 
     /* Header */
-    .topbar{
+   .topbar{
   position: sticky;
   top: 0;
   z-index: 40;
   padding: 10px 0 12px;
-  backdrop-filter: blur(var(--blur));
-  -webkit-backdrop-filter: blur(var(--blur));
-  background: rgba(11,13,18,.92); /* ✅ opaque */
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  background: rgba(11,13,18,.96); /* 🔒 fond solide */
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  will-change: transform;
+  transform: translateZ(0);
 }
     .topbar::after{
   content:"";
@@ -470,6 +471,10 @@
       overflow:hidden;clip:rect(0,0,0,0);
       white-space:nowrap;border:0;
     }
+    /* ✅ Empêche les cartes de passer sous le header */
+main.wrap {
+  padding-top: 12px;
+}
   </style>
 </head>
 
