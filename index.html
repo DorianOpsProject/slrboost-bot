@@ -7,121 +7,188 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
-      --bg: #0b0b0b;
+      --bg: #0a0a0a;
+      --panel: rgba(30,30,30,0.7);
       --gold: #f7b731;
       --white: #fff;
-      --gray: #1c1c1e;
-      --font: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      --gray: #222;
+      --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
     }
     body {
-      margin: 0; padding: 0;
-      background: var(--bg); color: var(--white);
+      margin: 0;
       font-family: var(--font);
+      background: var(--bg);
+      color: var(--white);
       overflow-x: hidden;
     }
     header {
       text-align: center;
       padding: 1.2rem 0;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 600;
-      letter-spacing: 1px;
       background: linear-gradient(90deg, #f7b731, #fff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1rem;
-      padding: 1rem;
-      animation: fadeIn 0.8s ease-in-out;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1.2rem;
+      padding: 1.2rem;
     }
     .product {
-      background: var(--gray);
-      border-radius: 16px;
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
       padding: 1rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      display: flex; flex-direction: column; align-items: center;
+      text-align: center;
+      transition: all 0.3s ease;
     }
-    .product:hover { transform: scale(1.05); box-shadow: 0 0 10px #f7b73155; }
-    .product h3 { margin: 0.5rem 0 0; font-size: 1.1rem; }
-    .product p { opacity: 0.7; font-size: 0.85rem; text-align: center; }
+    .product:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(247,183,49,0.3);
+    }
+    .product h3 {
+      margin: 0.4rem 0;
+      font-size: 1.05rem;
+    }
+    .product p {
+      opacity: 0.75;
+      font-size: 0.9rem;
+      margin: 0.3rem 0;
+    }
     .tag {
       background: var(--gold);
       color: black;
-      padding: 2px 8px;
-      border-radius: 8px;
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 10px;
       font-size: 0.7rem;
-      margin-top: 0.3rem;
+      margin-top: 5px;
     }
-    .add-btn {
-      margin-top: auto;
+    .price {
+      color: var(--gold);
+      font-weight: bold;
+      margin: 0.5rem 0;
+    }
+    button.add-btn {
       background: var(--gold);
       color: black;
-      font-weight: 600;
       border: none;
       border-radius: 10px;
       padding: 0.6rem 1rem;
       cursor: pointer;
-      transition: all 0.3s ease;
+      font-weight: 600;
+      transition: 0.25s;
     }
-    .add-btn:hover { background: #ffcc45; }
+    button.add-btn:hover { background: #ffcc45; }
 
+    /* Floating cart button */
     .cart-btn {
       position: fixed;
-      bottom: 20px; right: 20px;
+      bottom: 25px; right: 25px;
       background: var(--gold);
       color: black;
       border: none;
       border-radius: 50px;
-      padding: 0.8rem 1.2rem;
+      padding: 0.9rem 1.4rem;
       font-weight: bold;
+      font-size: 0.95rem;
       cursor: pointer;
-      box-shadow: 0 0 10px #f7b73188;
+      box-shadow: 0 0 10px #f7b73177;
+      z-index: 100;
     }
 
-    /* Panier modal */
+    /* Modal styles */
     .modal {
       position: fixed;
-      bottom: -100%;
-      left: 0; right: 0;
+      left: 0; right: 0; bottom: -100%;
       background: var(--gray);
       border-radius: 20px 20px 0 0;
       transition: bottom 0.4s ease;
-      padding: 1rem;
-      z-index: 10;
+      padding: 1.5rem;
+      z-index: 50;
+      color: var(--white);
     }
     .modal.show { bottom: 0; }
-    .cart-item { display: flex; justify-content: space-between; padding: 0.5rem 0; }
+    .modal h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .cart-total {
+      font-weight: bold;
+      text-align: right;
+      margin-top: 0.8rem;
+      color: var(--gold);
+    }
     .form input, .form select {
       width: 100%;
-      padding: 0.6rem;
-      border-radius: 8px;
+      padding: 0.7rem;
+      border-radius: 10px;
       border: none;
-      margin-bottom: 0.6rem;
+      margin: 0.5rem 0;
+      background: #111;
+      color: white;
+      font-size: 0.9rem;
     }
     .submit-btn {
       background: var(--gold);
       color: black;
-      font-weight: bold;
       border: none;
       border-radius: 10px;
       padding: 0.8rem;
       width: 100%;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    .confirm-box {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+    .confirm {
+      background: var(--panel);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      width: 85%;
+      max-width: 400px;
+    }
+    .confirm h3 { margin-top: 0; color: var(--gold); }
+    .confirm button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      border: none;
+      font-weight: bold;
       cursor: pointer;
     }
-    @keyframes fadeIn { from {opacity:0; transform: translateY(20px);} to {opacity:1; transform: translateY(0);} }
+    .confirm .yes { background: var(--gold); color: black; }
+    .confirm .no { background: #333; color: white; margin-left: 10px; }
   </style>
 </head>
 <body>
   <header>SLR BOOST ⚡</header>
   <section class="products" id="products"></section>
-
   <button class="cart-btn" id="openCart">🛒 Panier (<span id="count">0</span>)</button>
 
   <div class="modal" id="cartModal">
     <h2>🛍️ Votre commande</h2>
     <div id="cartItems"></div>
+    <div class="cart-total" id="cartTotal">Total : 0.00 €</div>
     <hr>
     <h3>🚚 Informations de livraison</h3>
     <div class="form">
@@ -135,73 +202,114 @@
     <button class="submit-btn" id="submitOrder">Commander</button>
   </div>
 
+  <div class="confirm-box" id="confirmBox">
+    <div class="confirm">
+      <h3>Confirmer la commande ?</h3>
+      <p id="confirmDetails"></p>
+      <button class="yes" id="confirmYes">Oui</button>
+      <button class="no" id="confirmNo">Annuler</button>
+    </div>
+  </div>
+
   <script>
     const PRODUCTS = [
-      { id:"SLR-P01", name:"Produit 01", category:"Catalogue", origin:"🇲🇦 Maroc", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:["Nouveau"] },
-      { id:"SLR-P02", name:"Produit 02", category:"Catalogue", origin:"🇲🇦 Maroc", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:["Populaire"] },
-      { id:"SLR-P03", name:"Produit 03", category:"Catalogue", origin:"🇲🇦 Maroc", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:["Stock limité"] },
-      { id:"SLR-P04", name:"Produit 04", category:"Catalogue", origin:"🇲🇦 Maroc", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:[] },
-      { id:"SLR-P05", name:"Produit 05", category:"Catalogue", origin:"🇳🇱 Pays-Bas", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:["Best-seller"] },
-      { id:"SLR-P06", name:"Produit 06", category:"Catalogue", origin:"🇳🇱 Pays-Bas", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:[] },
-      { id:"SLR-P07", name:"Produit 07", category:"Catalogue", origin:"🇺🇸 USA", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:["USA"] },
-      { id:"SLR-P08", name:"Produit 08", category:"Catalogue", origin:"🇳🇱 Pays-Bas", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:[] },
-      { id:"SLR-P09", name:"Produit 09", category:"Catalogue", origin:"🇺🇸 USA", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:[] },
-      { id:"SLR-P10", name:"Produit 10", category:"Catalogue", origin:"🇺🇸 USA", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:[] },
-      { id:"SLR-P11", name:"Produit 11", category:"Catalogue", origin:"🇨🇦 Canada", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:["Canada"] }
+      { id:"SLR-P01", name:"Produit 01", origin:"🇲🇦", price:12.00, desc:"Produit d'exception - Maroc", tags:["Nouveau"] },
+      { id:"SLR-P02", name:"Produit 02", origin:"🇲🇦", price:9.50, desc:"Qualité Premium - Maroc", tags:["Populaire"] },
+      { id:"SLR-P03", name:"Produit 03", origin:"🇲🇦", price:15.00, desc:"Production artisanale", tags:["Stock limité"] },
+      { id:"SLR-P05", name:"Produit 05", origin:"🇳🇱", price:18.00, desc:"Origine Pays-Bas", tags:["Best-seller"] },
+      { id:"SLR-P07", name:"Produit 07", origin:"🇺🇸", price:22.00, desc:"Origine USA", tags:["USA"] },
+      { id:"SLR-P11", name:"Produit 11", origin:"🇨🇦", price:25.00, desc:"Origine Canada", tags:["Canada"] },
     ];
 
     const tg = window.Telegram?.WebApp || {};
     const productsContainer = document.getElementById('products');
     const cartBtn = document.getElementById('openCart');
     const modal = document.getElementById('cartModal');
-    const count = document.getElementById('count');
     const cartItems = document.getElementById('cartItems');
-    const submitOrder = document.getElementById('submitOrder');
+    const cartTotal = document.getElementById('cartTotal');
+    const count = document.getElementById('count');
     const nameInput = document.getElementById('name');
     const addressInput = document.getElementById('address');
     const deliveryInput = document.getElementById('delivery');
+    const confirmBox = document.getElementById('confirmBox');
+    const confirmDetails = document.getElementById('confirmDetails');
+    const confirmYes = document.getElementById('confirmYes');
+    const confirmNo = document.getElementById('confirmNo');
 
     let cart = [];
 
-    PRODUCTS.forEach(p => {
-      const card = document.createElement('div');
-      card.className = 'product';
-      card.innerHTML = `
-        <h3>${p.name}</h3>
-        <p>${p.origin} ${p.quality}</p>
-        <p style="opacity:0.6">${p.desc}</p>
-        ${p.tags.map(t=>`<div class="tag">${t}</div>`).join('')}
-        <button class="add-btn" data-id="${p.id}">Ajouter</button>
-      `;
-      productsContainer.appendChild(card);
-    });
-
-    document.querySelectorAll('.add-btn').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        const id = btn.dataset.id;
-        const product = PRODUCTS.find(p=>p.id===id);
-        cart.push(product);
-        count.textContent = cart.length;
-        tg.HapticFeedback?.impactOccurred('soft');
+    function renderProducts() {
+      productsContainer.innerHTML = "";
+      PRODUCTS.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'product';
+        card.innerHTML = `
+          <h3>${p.origin} ${p.name}</h3>
+          <p>${p.desc}</p>
+          ${p.tags.map(t=>`<div class="tag">${t}</div>`).join('')}
+          <div class="price">${p.price.toFixed(2)} €</div>
+          <button class="add-btn" data-id="${p.id}">Ajouter</button>
+        `;
+        productsContainer.appendChild(card);
       });
+      document.querySelectorAll('.add-btn').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          const id = btn.dataset.id;
+          const product = PRODUCTS.find(p=>p.id===id);
+          cart.push(product);
+          count.textContent = cart.length;
+          tg.HapticFeedback?.impactOccurred('soft');
+        });
+      });
+    }
+
+    function renderCart() {
+      cartItems.innerHTML = "";
+      let total = 0;
+      cart.forEach((item,i)=>{
+        total += item.price;
+        cartItems.innerHTML += `
+          <div class="cart-item">
+            <span>${item.origin} ${item.name}</span>
+            <span>${item.price.toFixed(2)} €</span>
+          </div>
+        `;
+      });
+      cartTotal.textContent = `Total : ${total.toFixed(2)} €`;
+    }
+
+    cartBtn.addEventListener('click',()=>{
+      renderCart();
+      modal.classList.toggle('show');
     });
 
-    cartBtn.addEventListener('click',()=> modal.classList.toggle('show'));
+    document.getElementById('submitOrder').addEventListener('click',()=>{
+      if(!nameInput.value) return alert("Merci d'indiquer votre nom.");
+      if(deliveryInput.value==="Livraison" && !addressInput.value) return alert("Merci d'indiquer votre adresse.");
+      renderCart();
+      confirmDetails.textContent = `${cart.length} article(s) - ${cartTotal.textContent}`;
+      confirmBox.style.display = "flex";
+    });
 
-    submitOrder.addEventListener('click',()=>{
+    confirmNo.addEventListener('click',()=> confirmBox.style.display = "none");
+
+    confirmYes.addEventListener('click',()=>{
       const order = {
         items: cart,
+        total: cart.reduce((s,p)=>s+p.price,0),
         name: nameInput.value,
         address: addressInput.value,
         delivery: deliveryInput.value
       };
-      if(!order.name) return alert("Merci d'indiquer votre nom.");
-      if(order.delivery==="Livraison" && !order.address) return alert("Merci d'indiquer votre adresse.");
       tg.sendData?.(JSON.stringify(order));
+      confirmBox.style.display = "none";
       modal.classList.remove('show');
       alert("✅ Commande envoyée ! Le montant peut varier selon le produit.");
       cart = []; count.textContent=0;
     });
+
+    renderProducts();
+    tg.expand?.();
   </script>
 </body>
 </html>
