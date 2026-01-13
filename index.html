@@ -17,7 +17,7 @@
       theme: {
         extend: {
           colors: {
-            bg0: '#070A10',
+            bg0: '#05070D',
             bg1: '#0B1020',
             glass: 'rgba(255,255,255,.06)',
             glass2: 'rgba(255,255,255,.09)',
@@ -25,37 +25,41 @@
             stroke2: 'rgba(255,255,255,.16)',
             text: 'rgba(250,253,255,.96)',
             muted: 'rgba(250,253,255,.66)',
-            muted2: 'rgba(250,253,255,.50)',
+            muted2: 'rgba(250,253,255,.48)',
             accent: '#FFD400',
             accent2: '#FFB800',
             good: '#2EE59D',
             bad: '#FF4D4D',
+            ink: 'rgba(12,16,26,.88)'
           },
           boxShadow: {
             soft: '0 10px 26px rgba(0,0,0,.42)',
             deep: '0 18px 60px rgba(0,0,0,.55)',
             accent: '0 18px 34px rgba(255,212,0,.14)',
+            neon: '0 0 0 1px rgba(255,255,255,.06), 0 22px 70px rgba(0,0,0,.55)'
           },
           borderRadius: {
             xl2: '18px',
             xl3: '24px',
-            xl4: '26px',
+            xl4: '28px',
           },
           keyframes: {
             floaty: { '0%,100%': { transform: 'translate3d(0,0,0) scale(1)' }, '50%': { transform: 'translate3d(0,26px,0) scale(1.06)' } },
-            floaty2: { '0%,100%': { transform: 'translate3d(0,0,0) scale(1)' }, '50%': { transform: 'translate3d(0,18px,0) scale(1.05)' } },
-            floaty3: { '0%,100%': { transform: 'translate3d(0,0,0) scale(1)' }, '50%': { transform: 'translate3d(0,30px,0) scale(1.06)' } },
+            floaty2:{ '0%,100%': { transform: 'translate3d(0,0,0) scale(1)' }, '50%': { transform: 'translate3d(0,18px,0) scale(1.05)' } },
+            floaty3:{ '0%,100%': { transform: 'translate3d(0,0,0) scale(1)' }, '50%': { transform: 'translate3d(0,30px,0) scale(1.06)' } },
             sheen: { 'to': { transform: 'rotate(360deg)' } },
             drift: { '0%,100%': { transform: 'translate3d(0,0,0) scale(1)' }, '50%': { transform: 'translate3d(12px,12px,0) scale(1.03)' } },
-            sk: { '0%': { backgroundPosition: '0% 0' }, '100%': { backgroundPosition: '-220% 0' } }
+            sweep: { '0%': { transform:'translateX(-65%)' }, '50%': { transform:'translateX(65%)' }, '100%': { transform:'translateX(-65%)' } },
+            pop: { '0%':{ transform:'scale(.96)' }, '100%':{ transform:'scale(1)' } }
           },
           animation: {
             floaty: 'floaty 14s ease-in-out infinite',
-            floaty2: 'floaty2 17s ease-in-out infinite',
-            floaty3: 'floaty3 19s ease-in-out infinite',
+            floaty2:'floaty2 17s ease-in-out infinite',
+            floaty3:'floaty3 19s ease-in-out infinite',
             sheen: 'sheen 2.8s linear infinite',
             drift: 'drift 11s ease-in-out infinite',
-            sk: 'sk 1.1s ease-in-out infinite'
+            sweep: 'sweep 5.8s ease-in-out infinite',
+            pop: 'pop .18s ease-out'
           }
         }
       }
@@ -74,12 +78,21 @@
         radial-gradient(1200px 800px at 15% 0%, rgba(255,212,0,.14), transparent 60%),
         radial-gradient(900px 600px at 85% 20%, rgba(46,229,157,.10), transparent 55%),
         radial-gradient(900px 700px at 50% 110%, rgba(105,140,255,.10), transparent 60%),
-        linear-gradient(180deg, #070A10, #0B1020);
+        linear-gradient(180deg, #05070D, #0B1020);
       overflow-x:hidden;
       font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Display","SF Pro Text", Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
     @media (prefers-reduced-motion: reduce){
       *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+    }
+    /* subtle noise */
+    .noise:before{
+      content:"";
+      position:absolute; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+      opacity:.08;
+      mix-blend-mode: overlay;
+      pointer-events:none;
     }
     .scrollbar::-webkit-scrollbar{ width:10px; }
     .scrollbar::-webkit-scrollbar-thumb{
@@ -93,19 +106,19 @@
 </head>
 
 <body class="text-text">
-  <!-- FX -->
+  <!-- FX orbs -->
   <div class="pointer-events-none fixed inset-0 z-0 overflow-hidden opacity-95" aria-hidden="true">
-    <div class="absolute -left-[180px] -top-[220px] h-[520px] w-[520px] rounded-full blur-[34px] opacity-[.16] animate-floaty"
+    <div class="absolute -left-[180px] -top-[220px] h-[560px] w-[560px] rounded-full blur-[40px] opacity-[.16] animate-floaty"
          style="background: radial-gradient(circle at 35% 30%, rgba(255,212,0,.95), rgba(255,212,0,0) 62%);"></div>
-    <div class="absolute -right-[220px] top-[60px] h-[520px] w-[520px] rounded-full blur-[34px] opacity-[.16] animate-floaty2"
+    <div class="absolute -right-[240px] top-[60px] h-[560px] w-[560px] rounded-full blur-[40px] opacity-[.16] animate-floaty2"
          style="background: radial-gradient(circle at 40% 35%, rgba(46,229,157,.95), rgba(46,229,157,0) 62%);"></div>
-    <div class="absolute left-[24%] -bottom-[320px] h-[520px] w-[520px] rounded-full blur-[34px] opacity-[.16] animate-floaty3"
+    <div class="absolute left-[22%] -bottom-[360px] h-[560px] w-[560px] rounded-full blur-[40px] opacity-[.16] animate-floaty3"
          style="background: radial-gradient(circle at 50% 40%, rgba(105,140,255,.95), rgba(105,140,255,0) 62%);"></div>
   </div>
 
-  <div class="relative z-10 mx-auto max-w-[980px] px-[14px] pb-[calc(98px+var(--safe-bottom))] pt-[calc(14px+var(--safe-top))]">
+  <div class="relative z-10 mx-auto max-w-[980px] px-[14px] pb-[calc(104px+var(--safe-bottom))] pt-[calc(14px+var(--safe-top))]">
     <!-- TOPBAR -->
-    <header class="sticky top-0 z-20 -mx-[14px] mb-3 border-b border-white/5 bg-gradient-to-b from-[#070A10]/90 to-[#070A10]/55 px-[14px] pb-3 pt-[calc(14px+var(--safe-top))] backdrop-blur-[14px]">
+    <header class="sticky top-0 z-20 -mx-[14px] mb-3 border-b border-white/5 bg-gradient-to-b from-[#05070D]/92 to-[#05070D]/55 px-[14px] pb-3 pt-[calc(14px+var(--safe-top))] backdrop-blur-[16px]">
       <div class="flex items-center justify-between gap-3">
         <div class="flex min-w-0 items-center gap-3">
           <div class="relative flex h-[46px] w-[46px] flex-none items-center justify-center overflow-hidden rounded-[16px] text-[#101010] shadow-[0_16px_30px_rgba(255,212,0,.16)]"
@@ -116,7 +129,7 @@
           </div>
           <div class="min-w-0">
             <h1 class="truncate text-[18px] font-black tracking-[.2px]">SLR BOOST</h1>
-            <p class="truncate text-[12.5px] text-muted">Catalogue • Que de la frappe • Commande en privé</p>
+            <p class="truncate text-[12.5px] text-muted">Catalogue premium • Commande en privé</p>
           </div>
         </div>
 
@@ -134,7 +147,7 @@
             <path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".9"/>
           </svg>
           <input id="q" class="w-full bg-transparent text-[14px] text-text outline-none placeholder:text-white/45"
-                 type="search" placeholder="Rechercher un produit, une référence, un tag…" autocomplete="off"/>
+                 type="search" placeholder="Recherche : produit, référence, tag…" autocomplete="off"/>
         </div>
 
         <button id="btnCartTop" type="button"
@@ -153,20 +166,77 @@
       <div id="chipsRow" class="mt-3 flex items-center gap-2.5 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"></div>
     </header>
 
+    <!-- HERO -->
+    <section class="relative mb-3 overflow-hidden rounded-xl4 border border-white/10 bg-white/5 p-4 shadow-neon noise">
+      <div class="pointer-events-none absolute inset-[-1px] opacity-70">
+        <div class="absolute inset-[-40%] blur-[28px] opacity-70 animate-drift"
+             style="background:
+              radial-gradient(circle at 22% 20%, rgba(255,212,0,.22), transparent 58%),
+              radial-gradient(circle at 80% 25%, rgba(46,229,157,.14), transparent 60%),
+              radial-gradient(circle at 55% 110%, rgba(105,140,255,.12), transparent 62%);"></div>
+        <div class="absolute inset-[-1px] opacity-60 animate-sweep"
+             style="background: linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent);"></div>
+      </div>
+
+      <div class="relative flex flex-col gap-3">
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0">
+            <div class="inline-flex items-center gap-2 rounded-full border border-[rgba(255,212,0,.20)] bg-[rgba(255,212,0,.08)] px-3 py-1.5 text-[12px] text-[rgba(255,247,215,.92)]">
+              <span class="font-black text-accent">EXCLU</span> • Catalogue privé
+            </div>
+            <h2 class="mt-2 text-[18px] font-black tracking-[.2px]">Une mini-app qui vend vraiment.</h2>
+            <p class="mt-1 text-[12.8px] leading-snug text-muted">
+              Sélection premium • Références claires • Panier propre • Commande envoyée en privé.
+            </p>
+          </div>
+
+          <div class="hidden sm:flex flex-col items-end gap-2">
+            <div class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[12px] text-muted shadow-soft">
+              Livraison <span class="font-black text-white/90">59 / 62 / Belgium</span>
+            </div>
+            <div class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[12px] text-muted shadow-soft">
+              Paiement / prix <span class="font-black text-white/90">confirmés en PV</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid gap-2 sm:grid-cols-3">
+          <div class="rounded-xl3 border border-white/10 bg-black/20 p-3">
+            <div class="text-[12px] text-muted2">Qualité</div>
+            <div class="mt-0.5 text-[13px] font-black">Premium uniquement</div>
+          </div>
+          <div class="rounded-xl3 border border-white/10 bg-black/20 p-3">
+            <div class="text-[12px] text-muted2">Discrétion</div>
+            <div class="mt-0.5 text-[13px] font-black">Commande en privé</div>
+          </div>
+          <div class="rounded-xl3 border border-white/10 bg-black/20 p-3">
+            <div class="text-[12px] text-muted2">Rapidité</div>
+            <div class="mt-0.5 text-[13px] font-black">Récap auto + envoi</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIST -->
     <main>
+      <div class="mb-2 flex items-center justify-between">
+        <div class="text-[13px] font-black tracking-[.2px] text-white/90">Catalogue</div>
+        <div id="countInfo" class="text-[12px] text-muted">—</div>
+      </div>
+
       <div id="list" class="flex flex-col gap-3"></div>
+
       <div id="emptyState" class="hidden rounded-xl2 border border-dashed border-white/15 bg-white/5 p-4 text-center text-[13px] leading-snug text-muted">
         Aucun produit ne correspond à ta recherche.
       </div>
     </main>
   </div>
 
-  <!-- Bottom bar -->
-  <div class="fixed bottom-0 left-0 right-0 z-40 border-t border-white/5 bg-gradient-to-b from-[#070A10]/0 to-[#070A10]/90 px-[14px] pb-[calc(10px+var(--safe-bottom))] pt-2.5 backdrop-blur-[12px]">
+  <!-- BOTTOM CART BAR -->
+  <div class="fixed bottom-0 left-0 right-0 z-40 border-t border-white/5 bg-gradient-to-b from-[#05070D]/0 to-[#05070D]/90 px-[14px] pb-[calc(10px+var(--safe-bottom))] pt-2.5 backdrop-blur-[14px]">
     <div class="mx-auto flex max-w-[980px] items-center justify-between gap-2.5">
       <div id="cartPreview"
-           class="flex flex-1 cursor-pointer items-center justify-between gap-3 rounded-xl3 border border-white/10 bg-white/5 p-3 shadow-soft transition active:translate-y-[1px] active:scale-[.99] hover:border-white/15 hover:bg-white/10"
-           role="button" aria-label="Ouvrir le panier">
+           class="flex flex-1 cursor-pointer items-center justify-between gap-3 rounded-xl4 border border-white/10 bg-white/5 p-3 shadow-soft transition active:translate-y-[1px] active:scale-[.99] hover:border-white/15 hover:bg-white/10">
         <div class="min-w-0">
           <div class="flex items-center gap-2 font-black text-[13px]">🛒 Panier</div>
           <div id="cartHint" class="truncate text-[12px] text-muted">Aucun article</div>
@@ -179,11 +249,11 @@
     </div>
   </div>
 
-  <!-- Sheet -->
+  <!-- MASK + SHEET -->
   <div id="mask" class="fixed inset-0 z-[60] bg-black/60 opacity-0 pointer-events-none transition-opacity"></div>
 
   <aside id="sheet"
-         class="fixed left-1/2 z-[61] w-[min(980px,calc(100%-18px))] -translate-x-1/2 rounded-[26px] border border-white/10 shadow-deep backdrop-blur-[18px] transition-[bottom] duration-300 [transition-timing-function:cubic-bezier(.2,.9,.2,1)] sheet-drag"
+         class="fixed left-1/2 z-[61] w-[min(980px,calc(100%-18px))] -translate-x-1/2 rounded-[28px] border border-white/10 shadow-deep backdrop-blur-[18px] transition-[bottom] duration-300 [transition-timing-function:cubic-bezier(.2,.9,.2,1)] sheet-drag"
          style="bottom: calc(-100% - 40px);
                 background:
                 radial-gradient(900px 340px at 20% 0%, rgba(255,212,0,.14), transparent 60%),
@@ -191,18 +261,20 @@
                 rgba(12,16,26,.88);"
          role="dialog" aria-modal="true" aria-label="Panier et commande">
 
+    <div class="px-3.5 pt-3">
+      <div class="mx-auto h-1.5 w-11 rounded-full bg-white/20" aria-hidden="true"></div>
+    </div>
+
     <div class="flex items-center justify-between gap-2.5 border-b border-white/10 px-3.5 py-3">
-      <div class="text-[14px] font-black tracking-[.2px]">Panier</div>
+      <div class="text-[14px] font-black tracking-[.2px]">Panier & Commande</div>
       <button id="sheetClose" type="button"
               class="rounded-xl2 border border-white/10 bg-white/5 px-3 py-2 text-white/90 transition active:translate-y-[1px] active:scale-[.99] hover:border-white/15 hover:bg-white/10">
         Fermer
       </button>
     </div>
 
-    <div class="mx-auto mt-2 h-1.5 w-11 rounded-full bg-white/20" aria-hidden="true"></div>
-
-    <div id="sheetBody" class="scrollbar max-h-[min(64vh,560px)] overflow-auto px-3.5 pb-3.5 pt-3">
-      <div class="rounded-xl2 border border-white/10 bg-white/5 p-3.5">
+    <div id="sheetBody" class="scrollbar max-h-[min(64vh,580px)] overflow-auto px-3.5 pb-3.5 pt-3">
+      <div class="rounded-xl4 border border-white/10 bg-white/5 p-3.5">
         <h3 class="mb-2.5 text-[13px] font-black tracking-[.2px] text-white/95">Produits sélectionnés</h3>
         <div id="cartItems"></div>
         <div id="cartEmpty" class="hidden rounded-xl2 border border-dashed border-white/15 bg-white/5 p-4 text-center text-[13px] leading-snug text-muted">
@@ -210,7 +282,7 @@
         </div>
       </div>
 
-      <div class="mt-3 rounded-xl2 border border-white/10 bg-white/5 p-3.5">
+      <div class="mt-3 rounded-xl4 border border-white/10 bg-white/5 p-3.5">
         <h3 class="mb-2.5 text-[13px] font-black tracking-[.2px] text-white/95">Livraison / Sur place</h3>
 
         <div class="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
@@ -287,14 +359,17 @@
     </div>
   </aside>
 
-  <!-- Toast -->
+  <!-- TOAST -->
   <div id="toast"
        class="fixed left-1/2 z-[90] max-w-[min(92vw,620px)] -translate-x-1/2 rounded-full border border-white/15 bg-[rgba(12,16,26,.86)] px-3 py-2 text-[13px] text-white/90 opacity-0 pointer-events-none shadow-deep backdrop-blur-[14px] transition"
-       style="bottom: calc(100px + var(--safe-bottom));">
+       style="bottom: calc(104px + var(--safe-bottom));">
     OK
   </div>
 
   <script>
+    /* ===========================
+       DATA
+       =========================== */
     const PRODUCTS = [
       { id:"SLR-P01", name:"Produit 01", category:"Catalogue", origin:"🇲🇦 Maroc", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:["Nouveau"] },
       { id:"SLR-P02", name:"Produit 02", category:"Catalogue", origin:"🇲🇦 Maroc", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:["Populaire"] },
@@ -310,39 +385,60 @@
     ];
 
     const CONTACT_USERNAME = "Petter59000XSLR";
-    const CART_KEY = "slr_cart_tw_v1";
-    const FORM_KEY = "slr_form_tw_v1";
+    const CART_KEY = "slr_cart_tw_v2";
+    const FORM_KEY = "slr_form_tw_v2";
 
+    /* ===========================
+       TELEGRAM INIT
+       =========================== */
     const tg = window.Telegram?.WebApp;
     try{
       tg?.ready?.();
       tg?.expand?.();
-      tg?.setHeaderColor?.("#070A10");
-      tg?.setBackgroundColor?.("#070A10");
+      tg?.setHeaderColor?.("#05070D");
+      tg?.setBackgroundColor?.("#05070D");
     }catch(e){}
 
+    /* ===========================
+       STATE
+       =========================== */
     const state = {
       q: "",
       filter: "ALL",
       cart: loadJSON(CART_KEY, {}),
-      form: loadJSON(FORM_KEY, { mode:"LIVRAISON", zone:"59", fullname:"", phone:"", address:"", note:"" })
+      form: loadJSON(FORM_KEY, {
+        mode: "LIVRAISON",
+        zone: "59",
+        fullname: "",
+        phone: "",
+        address: "",
+        note: ""
+      })
     };
 
+    /* ===========================
+       DOM
+       =========================== */
     const el = {
       q: document.getElementById("q"),
       chipsRow: document.getElementById("chipsRow"),
       list: document.getElementById("list"),
       empty: document.getElementById("emptyState"),
+      countInfo: document.getElementById("countInfo"),
+
       cartPreview: document.getElementById("cartPreview"),
       cartHint: document.getElementById("cartHint"),
       cartCountBadge: document.getElementById("cartCountBadge"),
       btnCartTop: document.getElementById("btnCartTop"),
+
       mask: document.getElementById("mask"),
       sheet: document.getElementById("sheet"),
       sheetClose: document.getElementById("sheetClose"),
+
       cartItems: document.getElementById("cartItems"),
       cartEmpty: document.getElementById("cartEmpty"),
       total: document.getElementById("total"),
+
       mode: document.getElementById("mode"),
       zone: document.getElementById("zone"),
       fullname: document.getElementById("fullname"),
@@ -350,12 +446,17 @@
       address: document.getElementById("address"),
       note: document.getElementById("note"),
       addrField: document.getElementById("addrField"),
+
       clear: document.getElementById("clear"),
       copy: document.getElementById("copy"),
       order: document.getElementById("order"),
+
       toast: document.getElementById("toast"),
     };
 
+    /* ===========================
+       HELPERS
+       =========================== */
     function loadJSON(key, fallback){
       try{
         const raw = localStorage.getItem(key);
@@ -393,8 +494,25 @@
     function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
     function getProduct(id){ return PRODUCTS.find(p=>p.id===id); }
 
+    async function copyText(text){
+      try{
+        if(tg?.Clipboard?.writeText){ await tg.Clipboard.writeText(text); return true; }
+      }catch(_){}
+      if(navigator.clipboard?.writeText){ await navigator.clipboard.writeText(text); return true; }
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position="fixed"; ta.style.left="-9999px"; ta.style.top="-9999px";
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      if(!ok) throw new Error("copy failed");
+      return true;
+    }
+
     function cartCount(){
-      let c=0; for(const qty of Object.values(state.cart)) c += Number(qty||0);
+      let c=0;
+      for(const qty of Object.values(state.cart)) c += Number(qty||0);
       return c;
     }
     function cartItems(){
@@ -417,6 +535,9 @@
       renderAll();
     }
 
+    /* ===========================
+       FILTERS
+       =========================== */
     function buildChips(){
       const origins = uniq(PRODUCTS.map(p=>p.origin));
       const categories = uniq(PRODUCTS.map(p=>p.category));
@@ -427,7 +548,7 @@
       for(const c of categories) chips.push({key:`CAT:${c}`, label:c});
       for(const o of origins) chips.push({key:`ORI:${o}`, label:o});
       for(const t of tags) chips.push({key:`TAG:${t}`, label:`#${t}`});
-      chips.push({key:"RESET", label:"♻️ Réinitialiser", reset:true});
+      chips.push({key:"RESET", label:"♻️ Reset", reset:true});
 
       el.chipsRow.innerHTML = "";
       for(const ch of chips){
@@ -482,25 +603,14 @@
       return true;
     }
 
-    async function copyText(text){
-      try{
-        if(tg?.Clipboard?.writeText){ await tg.Clipboard.writeText(text); return true; }
-      }catch(_){}
-      if(navigator.clipboard?.writeText){ await navigator.clipboard.writeText(text); return true; }
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position="fixed"; ta.style.left="-9999px"; ta.style.top="-9999px";
-      document.body.appendChild(ta);
-      ta.focus(); ta.select();
-      const ok = document.execCommand("copy");
-      document.body.removeChild(ta);
-      if(!ok) throw new Error("copy failed");
-      return true;
-    }
-
+    /* ===========================
+       RENDER PRODUCTS (UPGRADED)
+       =========================== */
     function renderList(){
       const filtered = PRODUCTS.filter(applyFilter);
       el.list.innerHTML = "";
+
+      el.countInfo.textContent = `${filtered.length} produit(s)`;
 
       if(filtered.length === 0){
         el.empty.classList.remove("hidden");
@@ -510,53 +620,62 @@
 
       for(const p of filtered){
         const qty = Number(state.cart[p.id]||0);
+
         const tags = (p.tags||[]).slice(0,4)
-          .map(t=>`<span class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11.8px] text-white/90"><span class="font-black text-accent">#</span>${escapeHTML(t)}</span>`)
+          .map(t=>`<span class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11.5px] text-white/90"><span class="font-black text-accent">#</span>${escapeHTML(t)}</span>`)
           .join("");
 
         const card = document.createElement("article");
-        card.className = "relative overflow-hidden rounded-xl4 border border-white/10 bg-white/5 p-3.5 shadow-soft transition hover:-translate-y-0.5 hover:border-white/15 hover:bg-white/10";
+        card.className = "relative overflow-hidden rounded-xl4 border border-white/10 bg-white/5 p-4 shadow-soft transition hover:-translate-y-0.5 hover:border-white/15 hover:bg-white/10";
 
         card.innerHTML = `
-          <div class="pointer-events-none absolute inset-[-45%] opacity-60 blur-[26px] animate-drift"
+          <div class="pointer-events-none absolute inset-[-45%] opacity-65 blur-[30px] animate-drift"
                style="background:
-                 radial-gradient(circle at 30% 30%, rgba(255,212,0,.16), transparent 58%),
-                 radial-gradient(circle at 80% 20%, rgba(46,229,157,.12), transparent 60%);"></div>
+                 radial-gradient(circle at 22% 25%, rgba(255,212,0,.18), transparent 58%),
+                 radial-gradient(circle at 82% 18%, rgba(46,229,157,.12), transparent 60%),
+                 radial-gradient(circle at 55% 120%, rgba(105,140,255,.10), transparent 62%);"></div>
 
           <div class="relative">
-            <h2 class="text-[16px] font-black tracking-[.2px] leading-tight">${escapeHTML(p.name)}</h2>
+            <div class="flex items-start justify-between gap-3">
+              <div class="min-w-0">
+                <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/20 px-3 py-1.5 text-[12px] text-muted shadow-soft">
+                  <span class="h-1.5 w-1.5 rounded-full bg-good"></span>
+                  <span class="font-black text-white/90">${escapeHTML(p.quality)}</span>
+                  <span class="text-white/40">•</span>
+                  <span>${escapeHTML(p.origin)}</span>
+                </div>
 
-            <div class="mt-2 grid gap-1.5 text-[12.8px] text-muted">
-              <div>Provenance : <b class="font-black text-white/90">${escapeHTML(p.origin)}</b></div>
-              <div>Type : <b class="font-black text-white/90">${escapeHTML(p.quality)}</b></div>
-              <div class="text-muted">${escapeHTML(p.desc)}</div>
+                <h2 class="mt-2 text-[16.5px] font-black tracking-[.2px] leading-tight">${escapeHTML(p.name)}</h2>
+                <p class="mt-1 text-[12.8px] leading-snug text-muted">${escapeHTML(p.desc)}</p>
+              </div>
+
+              <div class="flex flex-col items-end gap-2">
+                <div class="rounded-full border border-[rgba(255,212,0,.18)] bg-[rgba(255,212,0,.08)] px-3 py-1.5 text-[12px] text-[rgba(255,247,215,.92)]">
+                  Réf <b class="font-black text-accent">${escapeHTML(p.id)}</b>
+                </div>
+                <div class="flex items-baseline gap-2 whitespace-nowrap">
+                  <div class="text-[18px] font-black tracking-[.2px]">${money(p.price).replace(" €","")}</div>
+                  <div class="text-[12px] font-bold text-muted2">€ / unité</div>
+                </div>
+              </div>
             </div>
 
-            <div class="relative mt-2.5 flex flex-wrap gap-2">
-              <span class="rounded-xl2 border border-white/15 bg-black/20 px-3 py-2 text-[12.5px] text-white/90" style="border-style:dashed">
-                <span class="text-white/70">Réf :</span> <b class="font-black">${escapeHTML(p.id)}</b>
-              </span>
+            <div class="mt-3 flex flex-wrap gap-2">
               ${tags}
+              ${tags ? "" : `<span class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11.5px] text-white/70">—</span>`}
             </div>
 
-            <div class="relative mt-3 flex flex-wrap items-center justify-between gap-3">
-              <div class="ml-auto flex items-baseline gap-2 whitespace-nowrap">
-                <div class="text-[18px] font-black tracking-[.2px]">${money(p.price).replace(" €","")}</div>
-                <div class="text-[12px] font-bold text-muted2">€ / unité</div>
-              </div>
+            <div class="mt-3 grid gap-2.5 sm:grid-cols-2">
+              <button class="rounded-xl3 border border-white/10 bg-white/5 px-4 py-3 font-black tracking-[.2px] text-white/90 shadow-soft transition active:translate-y-[1px] active:scale-[.99] hover:border-white/15 hover:bg-white/10"
+                      type="button" data-act="copyref" data-id="${p.id}">
+                📋 Copier la réf
+              </button>
 
-              <div class="mt-2 flex w-full gap-2.5">
-                <button class="flex-1 rounded-xl2 border border-white/10 bg-white/5 px-4 py-3 font-black tracking-[.2px] text-white/90 shadow-soft transition active:translate-y-[1px] active:scale-[.99] hover:border-white/15 hover:bg-white/10"
-                        type="button" data-act="copyref" data-id="${p.id}">
-                  📋 Copier la réf
-                </button>
-
-                <button class="flex-1 rounded-xl2 px-4 py-3 font-black tracking-[.2px] text-[#141414] shadow-accent transition active:translate-y-[1px] active:scale-[.99] hover:brightness-105"
-                        style="background: linear-gradient(135deg,#FFD400,#FFB800);"
-                        type="button" data-act="add" data-id="${p.id}">
-                  ${qty>0 ? "✔ Ajouté ("+qty+")" : "+ Ajouter"}
-                </button>
-              </div>
+              <button class="rounded-xl3 px-4 py-3 font-black tracking-[.2px] text-[#141414] shadow-accent transition active:translate-y-[1px] active:scale-[.99] hover:brightness-105"
+                      style="background: linear-gradient(135deg,#FFD400,#FFB800);"
+                      type="button" data-act="add" data-id="${p.id}">
+                ${qty>0 ? "✔ Ajouté • x"+qty : "+ Ajouter au panier"}
+              </button>
             </div>
           </div>
         `;
@@ -571,11 +690,13 @@
           const id = btn.getAttribute("data-id");
 
           if(act === "copyref"){
-            copyText(id).then(()=>{ toast("Référence copiée"); haptic("light"); })
-                        .catch(()=>{ toast("Copie impossible"); haptic("rigid"); });
+            copyText(id)
+              .then(()=>{ toast("Référence copiée"); haptic("light"); })
+              .catch(()=>{ toast("Copie impossible"); haptic("rigid"); });
           }
+
           if(act === "add"){
-            const cur = Number(state.cart[id]||0);
+            const cur = Number(state.cart[id] || 0);
             setQty(id, cur + 1);
             toast("Ajouté au panier");
             haptic("light");
@@ -586,17 +707,24 @@
       }
     }
 
+    /* ===========================
+       CART BAR / SHEET
+       =========================== */
     function renderCartBar(){
       const count = cartCount();
       const total = cartTotal();
-      el.cartHint.textContent = count ? `${count} article(s) • Total indicatif ${money(total)}` : "Aucun article";
-      el.cartCountBadge.textContent = String(count);
 
-      if(count>0){
+      el.cartHint.textContent = count
+        ? `${count} article(s) • Total indicatif ${money(total)}`
+        : "Aucun article";
+
+      el.cartCountBadge.textContent = count;
+
+      if(count > 0){
         el.cartCountBadge.style.background = "linear-gradient(135deg,#FFD400,#FFB800)";
         el.cartCountBadge.style.color = "#141414";
         el.cartCountBadge.style.borderColor = "rgba(255,212,0,.30)";
-      }else{
+      } else {
         el.cartCountBadge.style.background = "rgba(255,212,0,.16)";
         el.cartCountBadge.style.color = "rgba(255,247,215,.95)";
         el.cartCountBadge.style.borderColor = "rgba(255,212,0,.22)";
@@ -610,23 +738,50 @@
       renderCartSheet();
       haptic("light");
     }
+
     function closeSheet(){
       el.mask.classList.add("opacity-0","pointer-events-none");
       el.mask.classList.remove("opacity-100");
       el.sheet.style.bottom = `calc(-100% - 40px)`;
     }
 
+    function applyModeUI(){
+      const isDelivery = el.mode.value === "LIVRAISON";
+      el.addrField.classList.toggle("hidden", !isDelivery);
+    }
+
+    function loadFormIntoUI(){
+      el.mode.value = state.form.mode || "LIVRAISON";
+      el.zone.value = state.form.zone || "59";
+      el.fullname.value = state.form.fullname || "";
+      el.phone.value = state.form.phone || "";
+      el.address.value = state.form.address || "";
+      el.note.value = state.form.note || "";
+      applyModeUI();
+    }
+
+    function saveFormFromUI(){
+      state.form = {
+        mode: el.mode.value,
+        zone: el.zone.value,
+        fullname: el.fullname.value.trim(),
+        phone: el.phone.value.trim(),
+        address: el.address.value.trim(),
+        note: el.note.value.trim()
+      };
+      saveJSON(FORM_KEY, state.form);
+    }
+
     function renderCartSheet(){
       const items = cartItems();
       el.cartItems.innerHTML = "";
-
       el.cartEmpty.classList.toggle("hidden", items.length>0);
 
       for(const it of items){
         const line = Number(it.p.price||0) * it.qty;
 
         const row = document.createElement("div");
-        row.className = "mb-2.5 flex items-start justify-between gap-3 rounded-xl2 border border-white/10 bg-black/20 p-3";
+        row.className = "mb-2.5 flex items-start justify-between gap-3 rounded-xl3 border border-white/10 bg-black/20 p-3";
         row.innerHTML = `
           <div class="min-w-0">
             <div class="truncate text-[13.8px] font-black tracking-[.15px]">${escapeHTML(it.p.name)}</div>
@@ -658,6 +813,7 @@
         row.addEventListener("click",(e)=>{
           const b = e.target.closest("[data-act]");
           if(!b) return;
+
           const act = b.getAttribute("data-act");
           const id = b.getAttribute("data-id");
           const cur = Number(state.cart[id]||0);
@@ -665,6 +821,7 @@
           if(act === "inc") setQty(id, cur+1);
           if(act === "dec") setQty(id, cur-1);
           if(act === "remove") setQty(id, 0);
+
           haptic("soft");
         });
 
@@ -676,31 +833,9 @@
       loadFormIntoUI();
     }
 
-    function loadFormIntoUI(){
-      el.mode.value = state.form.mode || "LIVRAISON";
-      el.zone.value = state.form.zone || "59";
-      el.fullname.value = state.form.fullname || "";
-      el.phone.value = state.form.phone || "";
-      el.address.value = state.form.address || "";
-      el.note.value = state.form.note || "";
-      applyModeUI();
-    }
-    function saveFormFromUI(){
-      state.form = {
-        mode: el.mode.value,
-        zone: el.zone.value,
-        fullname: el.fullname.value.trim(),
-        phone: el.phone.value.trim(),
-        address: el.address.value.trim(),
-        note: el.note.value.trim()
-      };
-      saveJSON(FORM_KEY, state.form);
-    }
-    function applyModeUI(){
-      const isDelivery = el.mode.value === "LIVRAISON";
-      el.addrField.classList.toggle("hidden", !isDelivery);
-    }
-
+    /* ===========================
+       ORDER
+       =========================== */
     function buildOrderText(){
       const items = cartItems();
       const total = cartTotal();
@@ -744,8 +879,8 @@
     }
 
     function validateBeforeOrder(){
-      const items = cartItems();
-      if(!items.length){ toast("Panier vide"); haptic("rigid"); return false; }
+      if(!cartItems().length){ toast("Panier vide"); haptic("rigid"); return false; }
+
       const f = state.form;
       if(!f.fullname || f.fullname.length < 2){ toast("Ajoute ton nom/prénom"); haptic("rigid"); return false; }
       if(!f.phone || f.phone.length < 6){ toast("Ajoute un téléphone valide"); haptic("rigid"); return false; }
@@ -778,20 +913,25 @@
       haptic("light");
     }
 
+    /* ===========================
+       INIT / EVENTS
+       =========================== */
     function renderAll(){
       buildChips();
       renderList();
       renderCartBar();
+
       const opened = el.mask.classList.contains("opacity-100") && !el.mask.classList.contains("pointer-events-none");
       if(opened) renderCartSheet();
     }
 
-    // EVENTS
-    el.q.addEventListener("input", ()=>{ state.q = el.q.value || ""; renderAll(); });
+    el.q.addEventListener("input", ()=>{
+      state.q = el.q.value || "";
+      renderAll();
+    });
 
     el.cartPreview.addEventListener("click", openSheet);
     el.btnCartTop.addEventListener("click", openSheet);
-
     el.sheetClose.addEventListener("click", closeSheet);
     el.mask.addEventListener("click", closeSheet);
 
@@ -818,7 +958,7 @@
 
     el.order.addEventListener("click", handleOrder);
 
-    // Back button (sheet close first)
+    // Telegram Back button behavior
     try{
       if(tg?.BackButton){
         tg.BackButton.show();
@@ -830,9 +970,8 @@
       }
     }catch(_){}
 
-    // INIT
+    // Prefill UI from stored form
     function init(){
-      // prefill UI from storage
       el.mode.value = state.form.mode || "LIVRAISON";
       el.zone.value = state.form.zone || "59";
       el.fullname.value = state.form.fullname || "";
