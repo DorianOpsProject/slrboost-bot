@@ -60,60 +60,32 @@
             drift: 'drift 11s ease-in-out infinite',
             sweep: 'sweep 5.8s ease-in-out infinite',
             pop: 'pop .18s ease-out'
+          },
+          fontFamily: {
+            ui: ['ui-sans-serif','system-ui','-apple-system','"SF Pro Display"','"SF Pro Text"','Segoe UI','Roboto','Helvetica','Arial','"Apple Color Emoji"','"Segoe UI Emoji"']
           }
         }
       }
     }
   </script>
-
-  <style>
-    :root{
-      --safe-top: env(safe-area-inset-top);
-      --safe-bottom: env(safe-area-inset-bottom);
-    }
-    html, body { height:100%; }
-    body{
-      margin:0;
-      background:
-        radial-gradient(1200px 800px at 15% 0%, rgba(255,212,0,.14), transparent 60%),
-        radial-gradient(900px 600px at 85% 20%, rgba(46,229,157,.10), transparent 55%),
-        radial-gradient(900px 700px at 50% 110%, rgba(105,140,255,.10), transparent 60%),
-        linear-gradient(180deg, #05070D, #0B1020);
-      overflow-x:hidden;
-      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Display","SF Pro Text", Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-    }
-    @media (prefers-reduced-motion: reduce){
-      *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
-    }
-    /* subtle noise */
-    .noise:before{
-      content:"";
-      position:absolute; inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
-      opacity:.08;
-      mix-blend-mode: overlay;
-      pointer-events:none;
-    }
-    .scrollbar::-webkit-scrollbar{ width:10px; }
-    .scrollbar::-webkit-scrollbar-thumb{
-      background: rgba(255,255,255,.10);
-      border-radius: 999px;
-      border: 2px solid rgba(0,0,0,0);
-      background-clip: padding-box;
-    }
-    .sheet-drag { transform: translateX(-50%); }
-  </style>
 </head>
 
-<body class="text-text">
+<body
+  class="min-h-screen overflow-x-hidden font-ui text-text
+         [--safe-top:env(safe-area-inset-top)] [--safe-bottom:env(safe-area-inset-bottom)]
+         bg-[radial-gradient(1200px_800px_at_15%_0%,rgba(255,212,0,.14),transparent_60%),radial-gradient(900px_600px_at_85%_20%,rgba(46,229,157,.10),transparent_55%),radial-gradient(900px_700px_at_50%_110%,rgba(105,140,255,.10),transparent_60%),linear-gradient(180deg,#05070D,#0B1020)]
+         motion-reduce:[&_*]:!transition-none motion-reduce:[&_*]:!animate-none motion-reduce:scroll-auto">
+
   <!-- FX orbs -->
   <div class="pointer-events-none fixed inset-0 z-0 overflow-hidden opacity-95" aria-hidden="true">
-    <div class="absolute -left-[180px] -top-[220px] h-[560px] w-[560px] rounded-full blur-[40px] opacity-[.16] animate-floaty"
-         style="background: radial-gradient(circle at 35% 30%, rgba(255,212,0,.95), rgba(255,212,0,0) 62%);"></div>
-    <div class="absolute -right-[240px] top-[60px] h-[560px] w-[560px] rounded-full blur-[40px] opacity-[.16] animate-floaty2"
-         style="background: radial-gradient(circle at 40% 35%, rgba(46,229,157,.95), rgba(46,229,157,0) 62%);"></div>
-    <div class="absolute left-[22%] -bottom-[360px] h-[560px] w-[560px] rounded-full blur-[40px] opacity-[.16] animate-floaty3"
-         style="background: radial-gradient(circle at 50% 40%, rgba(105,140,255,.95), rgba(105,140,255,0) 62%);"></div>
+    <div class="absolute -left-[180px] -top-[220px] h-[560px] w-[560px] rounded-full blur-[40px] opacity-[.16] animate-floaty
+                bg-[radial-gradient(circle_at_35%_30%,rgba(255,212,0,.95),rgba(255,212,0,0)_62%)]"></div>
+
+    <div class="absolute -right-[240px] top-[60px] h-[560px] w-[560px] rounded-full blur-[40px] opacity-[.16] animate-floaty2
+                bg-[radial-gradient(circle_at_40%_35%,rgba(46,229,157,.95),rgba(46,229,157,0)_62%)]"></div>
+
+    <div class="absolute left-[22%] -bottom-[360px] h-[560px] w-[560px] rounded-full blur-[40px] opacity-[.16] animate-floaty3
+                bg-[radial-gradient(circle_at_50%_40%,rgba(105,140,255,.95),rgba(105,140,255,0)_62%)]"></div>
   </div>
 
   <div class="relative z-10 mx-auto max-w-[980px] px-[14px] pb-[calc(104px+var(--safe-bottom))] pt-[calc(14px+var(--safe-top))]">
@@ -121,10 +93,10 @@
     <header class="sticky top-0 z-20 -mx-[14px] mb-3 border-b border-white/5 bg-gradient-to-b from-[#05070D]/92 to-[#05070D]/55 px-[14px] pb-3 pt-[calc(14px+var(--safe-top))] backdrop-blur-[16px]">
       <div class="flex items-center justify-between gap-3">
         <div class="flex min-w-0 items-center gap-3">
-          <div class="relative flex h-[46px] w-[46px] flex-none items-center justify-center overflow-hidden rounded-[16px] text-[#101010] shadow-[0_16px_30px_rgba(255,212,0,.16)]"
-               style="background: linear-gradient(135deg, #FFD400, #FFB800);">
-            <div class="absolute inset-[-40%] opacity-60 animate-sheen"
-                 style="background: conic-gradient(from 180deg, rgba(255,255,255,0), rgba(255,255,255,.55), rgba(255,255,255,0));"></div>
+          <div class="relative flex h-[46px] w-[46px] flex-none items-center justify-center overflow-hidden rounded-[16px] text-[#101010] shadow-[0_16px_30px_rgba(255,212,0,.16)]
+                      bg-gradient-to-br from-accent to-accent2">
+            <div class="absolute inset-[-40%] opacity-60 animate-sheen
+                        bg-[conic-gradient(from_180deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0))]"></div>
             <span class="relative text-[18px] font-black">⚡</span>
           </div>
           <div class="min-w-0">
@@ -167,22 +139,22 @@
     </header>
 
     <!-- HERO -->
-    <section class="relative mb-3 overflow-hidden rounded-xl4 border border-white/10 bg-white/5 p-4 shadow-neon noise">
+    <section
+      class="relative mb-3 overflow-hidden rounded-xl4 border border-white/10 bg-white/5 p-4 shadow-neon
+             before:content-[''] before:absolute before:inset-0 before:pointer-events-none before:opacity-[.08] before:mix-blend-overlay
+             before:bg-[url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E&quot;)]">
       <div class="pointer-events-none absolute inset-[-1px] opacity-70">
-        <div class="absolute inset-[-40%] blur-[28px] opacity-70 animate-drift"
-             style="background:
-              radial-gradient(circle at 22% 20%, rgba(255,212,0,.22), transparent 58%),
-              radial-gradient(circle at 80% 25%, rgba(46,229,157,.14), transparent 60%),
-              radial-gradient(circle at 55% 110%, rgba(105,140,255,.12), transparent 62%);"></div>
-        <div class="absolute inset-[-1px] opacity-60 animate-sweep"
-             style="background: linear-gradient(90deg, transparent, rgba(255,255,255,.10), transparent);"></div>
+        <div class="absolute inset-[-40%] blur-[28px] opacity-70 animate-drift
+                    bg-[radial-gradient(circle_at_22%_20%,rgba(255,212,0,.22),transparent_58%),radial-gradient(circle_at_80%_25%,rgba(46,229,157,.14),transparent_60%),radial-gradient(circle_at_55%_110%,rgba(105,140,255,.12),transparent_62%)]"></div>
+        <div class="absolute inset-[-1px] opacity-60 animate-sweep
+                    bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.10),transparent)]"></div>
       </div>
 
       <div class="relative flex flex-col gap-3">
         <div class="flex items-start justify-between gap-3">
           <div class="min-w-0">
             <div class="inline-flex items-center gap-2 rounded-full border border-[rgba(255,212,0,.20)] bg-[rgba(255,212,0,.08)] px-3 py-1.5 text-[12px] text-[rgba(255,247,215,.92)]">
-              <span class="font-black text-accent">EXCLU</span> • Catalogue privé 
+              <span class="font-black text-accent">EXCLU</span> • Catalogue privé
             </div>
             <h2 class="mt-2 text-[18px] font-black tracking-[.2px]">Une mini-app qui vend vraiment.</h2>
             <p class="mt-1 text-[12.8px] leading-snug text-muted">
@@ -253,12 +225,10 @@
   <div id="mask" class="fixed inset-0 z-[60] bg-black/60 opacity-0 pointer-events-none transition-opacity"></div>
 
   <aside id="sheet"
-         class="fixed left-1/2 z-[61] w-[min(980px,calc(100%-18px))] -translate-x-1/2 rounded-[28px] border border-white/10 shadow-deep backdrop-blur-[18px] transition-[bottom] duration-300 [transition-timing-function:cubic-bezier(.2,.9,.2,1)] sheet-drag"
-         style="bottom: calc(-100% - 40px);
-                background:
-                radial-gradient(900px 340px at 20% 0%, rgba(255,212,0,.14), transparent 60%),
-                radial-gradient(900px 340px at 80% 0%, rgba(46,229,157,.10), transparent 62%),
-                rgba(12,16,26,.88);"
+         class="fixed left-1/2 z-[61] w-[min(980px,calc(100%-18px))] -translate-x-1/2 rounded-[28px] border border-white/10 shadow-deep backdrop-blur-[18px]
+                transition-[bottom] duration-300 [transition-timing-function:cubic-bezier(.2,.9,.2,1)]
+                bg-[radial-gradient(900px_340px_at_20%_0%,rgba(255,212,0,.14),transparent_60%),radial-gradient(900px_340px_at_80%_0%,rgba(46,229,157,.10),transparent_62%),rgba(12,16,26,.88)]"
+         style="bottom: calc(-100% - 40px);"
          role="dialog" aria-modal="true" aria-label="Panier et commande">
 
     <div class="px-3.5 pt-3">
@@ -273,7 +243,7 @@
       </button>
     </div>
 
-    <div id="sheetBody" class="scrollbar max-h-[min(64vh,580px)] overflow-auto px-3.5 pb-3.5 pt-3">
+    <div id="sheetBody" class="max-h-[min(64vh,580px)] overflow-auto px-3.5 pb-3.5 pt-3 scrollbar-thin scrollbar-thumb-white/10">
       <div class="rounded-xl4 border border-white/10 bg-white/5 p-3.5">
         <h3 class="mb-2.5 text-[13px] font-black tracking-[.2px] text-white/95">Produits sélectionnés</h3>
         <div id="cartItems"></div>
@@ -351,8 +321,7 @@
           Copier le récap
         </button>
         <button id="order" type="button"
-                class="flex-[2_1_220px] rounded-xl2 px-4 py-3 font-black tracking-[.2px] text-[#141414] shadow-accent transition active:translate-y-[1px] active:scale-[.99] hover:brightness-105"
-                style="background: linear-gradient(135deg, #FFD400, #FFB800);">
+                class="flex-[2_1_220px] rounded-xl2 px-4 py-3 font-black tracking-[.2px] text-[#141414] shadow-accent transition active:translate-y-[1px] active:scale-[.99] hover:brightness-105 bg-gradient-to-br from-accent to-accent2">
           Commander
         </button>
       </div>
@@ -361,8 +330,7 @@
 
   <!-- TOAST -->
   <div id="toast"
-       class="fixed left-1/2 z-[90] max-w-[min(92vw,620px)] -translate-x-1/2 rounded-full border border-white/15 bg-[rgba(12,16,26,.86)] px-3 py-2 text-[13px] text-white/90 opacity-0 pointer-events-none shadow-deep backdrop-blur-[14px] transition"
-       style="bottom: calc(104px + var(--safe-bottom));">
+       class="fixed left-1/2 z-[90] max-w-[min(92vw,620px)] -translate-x-1/2 rounded-full border border-white/15 bg-[rgba(12,16,26,.86)] px-3 py-2 text-[13px] text-white/90 opacity-0 pointer-events-none shadow-deep backdrop-blur-[14px] transition bottom-[calc(104px+var(--safe-bottom))]">
     OK
   </div>
 
@@ -563,8 +531,7 @@
         if(ch.reset){
           b.className = `${base} ${reset}`;
         }else if(ch.key === state.filter){
-          b.className = `${base} ${active}`;
-          b.style.background = "linear-gradient(135deg,#FFD400,#FFB800)";
+          b.className = `${base} ${active} bg-gradient-to-br from-accent to-accent2`;
         }else{
           b.className = `${base} ${inactive}`;
         }
@@ -629,11 +596,8 @@
         card.className = "relative overflow-hidden rounded-xl4 border border-white/10 bg-white/5 p-4 shadow-soft transition hover:-translate-y-0.5 hover:border-white/15 hover:bg-white/10";
 
         card.innerHTML = `
-          <div class="pointer-events-none absolute inset-[-45%] opacity-65 blur-[30px] animate-drift"
-               style="background:
-                 radial-gradient(circle at 22% 25%, rgba(255,212,0,.18), transparent 58%),
-                 radial-gradient(circle at 82% 18%, rgba(46,229,157,.12), transparent 60%),
-                 radial-gradient(circle at 55% 120%, rgba(105,140,255,.10), transparent 62%);"></div>
+          <div class="pointer-events-none absolute inset-[-45%] opacity-65 blur-[30px] animate-drift
+                      bg-[radial-gradient(circle_at_22%_25%,rgba(255,212,0,.18),transparent_58%),radial-gradient(circle_at_82%_18%,rgba(46,229,157,.12),transparent_60%),radial-gradient(circle_at_55%_120%,rgba(105,140,255,.10),transparent_62%)]"></div>
 
           <div class="relative">
             <div class="flex items-start justify-between gap-3">
@@ -671,8 +635,7 @@
                 📋 Copier la réf
               </button>
 
-              <button class="rounded-xl3 px-4 py-3 font-black tracking-[.2px] text-[#141414] shadow-accent transition active:translate-y-[1px] active:scale-[.99] hover:brightness-105"
-                      style="background: linear-gradient(135deg,#FFD400,#FFB800);"
+              <button class="rounded-xl3 px-4 py-3 font-black tracking-[.2px] text-[#141414] shadow-accent transition active:translate-y-[1px] active:scale-[.99] hover:brightness-105 bg-gradient-to-br from-accent to-accent2"
                       type="button" data-act="add" data-id="${p.id}">
                 ${qty>0 ? "✔ Ajouté • x"+qty : "+ Ajouter au panier"}
               </button>
@@ -721,13 +684,11 @@
       el.cartCountBadge.textContent = count;
 
       if(count > 0){
-        el.cartCountBadge.style.background = "linear-gradient(135deg,#FFD400,#FFB800)";
-        el.cartCountBadge.style.color = "#141414";
-        el.cartCountBadge.style.borderColor = "rgba(255,212,0,.30)";
+        el.cartCountBadge.className =
+          "grid h-[34px] min-w-[34px] place-items-center rounded-full px-2 font-black text-[13px] text-[#141414] border border-[rgba(255,212,0,.30)] bg-gradient-to-br from-accent to-accent2";
       } else {
-        el.cartCountBadge.style.background = "rgba(255,212,0,.16)";
-        el.cartCountBadge.style.color = "rgba(255,247,215,.95)";
-        el.cartCountBadge.style.borderColor = "rgba(255,212,0,.22)";
+        el.cartCountBadge.className =
+          "grid h-[34px] min-w-[34px] place-items-center rounded-full border border-[rgba(255,212,0,.22)] bg-[rgba(255,212,0,.16)] px-2 font-black text-[13px] text-[rgba(255,247,215,.95)]";
       }
     }
 
@@ -979,7 +940,6 @@
       el.address.value = state.form.address || "";
       el.note.value = state.form.note || "";
       applyModeUI();
-
       renderAll();
     }
     init();
