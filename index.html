@@ -375,27 +375,129 @@
     /* ===========================
        DATA
        =========================== */
-    const PRODUCTS = [
-      // ✅ Ajoute "media" pour chaque produit si tu veux l’afficher
-      // media: { type:"image", src:"https://.../photo.jpg" }
-      // media: { type:"video", src:"https://.../video.mp4" }
-
-      { id:"SLR-P01", name:"Mousseux", category:"Catalogue", origin:"🇲🇦🍫", quality:"Premium", price:10.00, desc:"Description (exemple).", tags:["Nouveau"],
-        media:{ type:"image", src:"https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=1200&q=80" }
-      },
-      { id:"SLR-P02", name:"Static", category:"Catalogue", origin:"🇲🇦🍫", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:["Populaire"],
-        media:{ type:"video", src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" }
-      },
-      { id:"SLR-P03", name:"Frozen", category:"Catalogue", origin:"🇲🇦🍫", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:["Stock limité"] },
-      { id:"SLR-P04", name:"Beldia", category:"Catalogue", origin:"🇲🇦🍫", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:[] },
-      { id:"SLR-P05", name:"Produit 05", category:"Catalogue", origin:"🇳🇱", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:["Best-seller"] },
-      { id:"SLR-P06", name:"Produit 06", category:"Catalogue", origin:"🇳🇱", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:[] },
-      { id:"SLR-P07", name:"Produit 07", category:"Catalogue", origin:"🇺🇸", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:["USA"] },
-      { id:"SLR-P08", name:"Produit 08", category:"Catalogue", origin:"🇳🇱", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:[] },
-      { id:"SLR-P09", name:"Produit 09", category:"Catalogue", origin:"🇺🇸", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:[] },
-      { id:"SLR-P10", name:"Produit 10", category:"Catalogue", origin:"🇺🇸", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:[] },
-      { id:"SLR-P11", name:"Produit 11", category:"Catalogue", origin:"🇨🇦", quality:"Premium", price:0.00, desc:"Description (exemple).", tags:["Canada"] }
-    ];
+  const PRODUCTS = [
+  {
+    id:"SLR-P01",
+    name:"Mousseux",
+    category:"Catalogue",
+    origin:"🇲🇦🍫",
+    quality:"Premium",
+    price:10.00,
+    desc:"Description (exemple).",
+    tags:["Nouveau"],
+    media:{ type:"image", src:"https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=1400&q=80" }
+  },
+  {
+    id:"SLR-P02",
+    name:"Static",
+    category:"Catalogue",
+    origin:"🇲🇦🍫",
+    quality:"Premium",
+    price:0.00,
+    desc:"Description (exemple).",
+    tags:["Populaire"],
+    media:{ type:"video", src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" }
+  },
+  {
+    id:"SLR-P03",
+    name:"Frozen",
+    category:"Catalogue",
+    origin:"🇲🇦🍫",
+    quality:"Premium",
+    price:0.00,
+    desc:"Description (exemple).",
+    tags:["Stock limité"],
+    media:{ type:"image", src:"https://images.unsplash.com/photo-1516455207990-7a41ce80f7ee?auto=format&fit=crop&w=1400&q=80" }
+  },
+  {
+    id:"SLR-P04",
+    name:"Beldia",
+    category:"Catalogue",
+    origin:"🇲🇦🍫",
+    quality:"Premium",
+    price:0.00,
+    desc:"Description (exemple).",
+    tags:[],
+    media:{ type:"image", src:"https://images.unsplash.com/photo-1528826194825-0e5f49d6a52a?auto=format&fit=crop&w=1400&q=80" }
+  },
+  {
+    id:"SLR-P05",
+    name:"Produit 05",
+    category:"Catalogue",
+    origin:"🇳🇱",
+    quality:"Premium",
+    price:0.00,
+    desc:"Description (exemple).",
+    tags:["Best-seller"],
+    media:{ type:"video", src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" }
+  },
+  {
+    id:"SLR-P06",
+    name:"Produit 06",
+    category:"Catalogue",
+    origin:"🇳🇱",
+    quality:"Premium",
+    price:0.00,
+    desc:"Description (exemple).",
+    tags:[],
+    media:{ type:"image", src:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1400&q=80" }
+  },
+  {
+    id:"SLR-P07",
+    name:"Produit 07",
+    category:"Catalogue",
+    origin:"🇺🇸",
+    quality:"Premium",
+    price:0.00,
+    desc:"Description (exemple).",
+    tags:["USA"],
+    media:{ type:"image", src:"https://images.unsplash.com/photo-1520975869011-2b3e5c05a7a4?auto=format&fit=crop&w=1400&q=80" }
+  },
+  {
+    id:"SLR-P08",
+    name:"Produit 08",
+    category:"Catalogue",
+    origin:"🇳🇱",
+    quality:"Premium",
+    price:0.00,
+    desc:"Description (exemple).",
+    tags:[],
+    media:{ type:"image", src:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1400&q=80" }
+  },
+  {
+    id:"SLR-P09",
+    name:"Produit 09",
+    category:"Catalogue",
+    origin:"🇺🇸",
+    quality:"Premium",
+    price:0.00,
+    desc:"Description (exemple).",
+    tags:[],
+    media:{ type:"video", src:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" }
+  },
+  {
+    id:"SLR-P10",
+    name:"Produit 10",
+    category:"Catalogue",
+    origin:"🇺🇸",
+    quality:"Premium",
+    price:0.00,
+    desc:"Description (exemple).",
+    tags:[],
+    media:{ type:"image", src:"https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=1400&q=80" }
+  },
+  {
+    id:"SLR-P11",
+    name:"Produit 11",
+    category:"Catalogue",
+    origin:"🇨🇦",
+    quality:"Premium",
+    price:0.00,
+    desc:"Description (exemple).",
+    tags:["Canada"],
+    media:{ type:"image", src:"https://images.unsplash.com/photo-1520975958225-7a5dfb0b7e5d?auto=format&fit=crop&w=1400&q=80" }
+  }
+];
 
     const CONTACT_USERNAME = "Petter59000XSLR";
     const CART_KEY = "slr_cart_tw_v2";
