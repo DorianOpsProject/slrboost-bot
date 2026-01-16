@@ -1,72 +1,116 @@
 <!DOCTYPE html>
 <html lang="fr" class="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SLR CATALOGUE</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SLR BOOST</title>
 
-  <!-- Telegram SDK -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            accent: '#FFD400'
-          }
-        }
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        accent: '#FFD400'
       }
     }
-  </script>
+  }
+}
+</script>
+
+<style>
+@keyframes driftIn {
+  0% {
+    transform: translateX(120%) rotate(-8deg) scale(.9);
+    opacity: 0;
+    filter: blur(6px);
+  }
+  60% {
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(-5%) rotate(3deg) scale(1);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes smoke {
+  0% { opacity:0; transform:translateX(0) scale(.6); }
+  50% { opacity:.4; }
+  100% { opacity:0; transform:translateX(-60px) scale(1.4); }
+}
+
+@keyframes textReveal {
+  0% { opacity:0; transform:translateY(20px) scale(.95); }
+  100% { opacity:1; transform:translateY(0) scale(1); }
+}
+</style>
 </head>
 
-<body class="bg-[#05070D] overflow-hidden">
+<body class="bg-[#05070D] text-white overflow-hidden">
 
-  <!-- LOADER -->
-  <div id="loader"
-       class="fixed inset-0 z-50 flex flex-col items-center justify-center">
+<!-- LOADER -->
+<div id="loader" class="fixed inset-0 z-50 flex items-center justify-center bg-[#05070D]">
 
-    <!-- Glow -->
-    <div class="absolute inset-0 pointer-events-none">
-      <div class="absolute left-1/2 top-1/2 h-[420px] w-[420px]
-                  -translate-x-1/2 -translate-y-1/2 rounded-full
-                  bg-[radial-gradient(circle,rgba(255,212,0,.25),transparent_65%)]
-                  blur-[90px] animate-pulse"></div>
+  <!-- Smoke -->
+  <div class="absolute bottom-1/2 right-1/2 w-40 h-20 bg-white/20 blur-2xl rounded-full
+              animate-[smoke_1.2s_ease-out_forwards]"></div>
+
+  <!-- Car silhouette -->
+  <svg id="car"
+       class="w-[320px] opacity-0"
+       style="animation: driftIn 1.6s cubic-bezier(.2,.8,.2,1) forwards;"
+       viewBox="0 0 512 128" fill="none">
+    <!-- simplified Mercedes SLR silhouette -->
+    <path d="M40 80
+             Q80 40 140 40
+             H280
+             Q320 40 360 60
+             L420 60
+             Q460 60 480 80
+             Z"
+          fill="white" opacity="0.9"/>
+    <circle cx="140" cy="90" r="16" fill="#000"/>
+    <circle cx="360" cy="90" r="16" fill="#000"/>
+  </svg>
+
+</div>
+
+<!-- BRAND -->
+<div id="brand"
+     class="fixed inset-0 z-40 flex items-center justify-center opacity-0">
+  <div class="text-center">
+    <div class="text-[40px] font-black tracking-[.35em]">
+      <span class="text-accent">SLR</span>
+      <span class="ml-3">BOOST</span>
     </div>
-
-    <!-- Text -->
-    <div class="relative text-center select-none">
-      <div class="text-[34px] font-black tracking-[.35em]">
-        <span class="text-accent animate-pulse">SLR</span>
-        <span class="ml-2 text-white/90">CATALOGUE</span>
-      </div>
-      <div class="mt-4 text-[12px] tracking-[.4em] text-white/40 animate-pulse">
-        LOADING
-      </div>
+    <div class="mt-4 text-xs tracking-[.4em] text-white/40">
+      POWER · PRESTIGE · SPEED
     </div>
   </div>
+</div>
 
-  <!-- APP FRAME -->
-  <iframe id="appFrame"
-          src="app.html"
-          class="fixed inset-0 w-full h-full border-0
-                 opacity-0 transition-opacity duration-700"></iframe>
+<!-- APP -->
+<div id="app" class="opacity-0 transition-opacity duration-700">
+  <!-- 🔥 TON APP ICI 🔥 -->
+</div>
 
-  <script>
-    const frame = document.getElementById("appFrame");
-    const loader = document.getElementById("loader");
+<script>
+setTimeout(() => {
+  document.getElementById("loader").classList.add("opacity-0");
+  document.getElementById("brand").classList.remove("opacity-0");
+  document.getElementById("brand").style.animation = "textReveal .9s ease-out forwards";
+}, 1800);
 
-    frame.onload = () => {
-      loader.classList.add("opacity-0");
-      frame.classList.add("opacity-100");
-
-      setTimeout(() => loader.remove(), 700);
-    };
-  </script>
+setTimeout(() => {
+  document.getElementById("loader").remove();
+  document.getElementById("app").classList.remove("opacity-0");
+}, 3000);
+</script>
 
 </body>
 </html>
