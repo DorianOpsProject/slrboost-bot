@@ -1,3 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+
+  <title>SLR BOOST — Indisponible</title>
+
+  <!-- Telegram Mini App SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            bg0: '#05070D',
+            bg1: '#0B1020',
+            glass: 'rgba(255,255,255,.06)',
+            glass2: 'rgba(255,255,255,.09)',
+            stroke: 'rgba(255,255,255,.10)',
+            stroke2: 'rgba(255,255,255,.16)',
+            text: 'rgba(250,253,255,.96)',
+            muted: 'rgba(250,253,255,.66)',
+            muted2: 'rgba(250,253,255,.48)',
+            accent: '#FFD400',
+            accent2: '#FFB800',
+            good: '#2EE59D',
+            bad: '#FF4D4D',
+            ink: 'rgba(12,16,26,.88)'
+          },
+          boxShadow: {
+            soft: '0 10px 26px rgba(0,0,0,.42)',
+            deep: '0 18px 60px rgba(0,0,0,.55)',
+            accent: '0 18px 34px rgba(255,212,0,.14)',
+            neon: '0 0 0 1px rgba(255,255,255,.06), 0 22px 70px rgba(0,0,0,.55)'
+          },
+          borderRadius: {
+            xl2: '18px',
+            xl3: '24px',
+            xl4: '28px'
+          },
+          keyframes: {
+            floaty: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(28px)' } },
+            floaty2:{ '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(18px)' } },
+            floaty3:{ '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(34px)' } },
+            sweep: { '0%': { transform:'translateX(-65%)' }, '50%': { transform:'translateX(65%)' }, '100%': { transform:'translateX(-65%)' } },
+            sheen: { 'to': { transform: 'rotate(360deg)' } }
+          },
+          animation: {
+            floaty: 'floaty 14s ease-in-out infinite',
+            floaty2:'floaty2 17s ease-in-out infinite',
+            floaty3:'floaty3 19s ease-in-out infinite',
+            sweep: 'sweep 6s ease-in-out infinite',
+            sheen: 'sheen 3s linear infinite'
+          },
+          fontFamily: {
+            ui: ['ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto','Helvetica','Arial']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
 <body
   class="min-h-screen overflow-hidden font-ui text-text
          bg-[radial-gradient(1200px_800px_at_15%_0%,rgba(255,212,0,.14),transparent_60%),
@@ -20,12 +90,12 @@
   <!-- CONTENT -->
   <main class="relative z-10 flex min-h-screen items-center justify-center px-4">
     <section
-      class="relative w-full max-w-[520px] overflow-hidden rounded-xl4 border border-white/10
-             bg-white/5 p-6 shadow-neon text-center">
+      class="relative w-full max-w-[520px] overflow-hidden rounded-xl4
+             border border-white/10 bg-white/5 p-6 text-center shadow-neon">
 
-      <!-- animated sweep -->
+      <!-- sweep light -->
       <div class="pointer-events-none absolute inset-[-1px] opacity-60 animate-sweep
-                  bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.10),transparent)]"></div>
+                  bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent)]"></div>
 
       <!-- ICON -->
       <div class="relative mx-auto mb-4 flex h-[72px] w-[72px] items-center justify-center
@@ -42,21 +112,34 @@
 
       <!-- TEXT -->
       <p class="mt-2 text-[13.5px] leading-snug text-muted">
-        SLR BOOST est momentanément hors ligne pour une mise à jour ou une maintenance.<br>
-        Merci de revenir dans quelques instants.
+        SLR BOOST est actuellement en maintenance ou mise à jour.<br>
+        Merci de réessayer dans quelques instants.
       </p>
 
       <!-- LOADER -->
-      <div class="mt-6 flex items-center justify-center gap-2">
-        <span class="h-2.5 w-2.5 animate-pulse rounded-full bg-accent"></span>
-        <span class="h-2.5 w-2.5 animate-pulse rounded-full bg-accent2 [animation-delay:150ms]"></span>
-        <span class="h-2.5 w-2.5 animate-pulse rounded-full bg-accent [animation-delay:300ms]"></span>
+      <div class="mt-6 flex justify-center gap-2">
+        <span class="h-2.5 w-2.5 rounded-full bg-accent animate-pulse"></span>
+        <span class="h-2.5 w-2.5 rounded-full bg-accent2 animate-pulse [animation-delay:150ms]"></span>
+        <span class="h-2.5 w-2.5 rounded-full bg-accent animate-pulse [animation-delay:300ms]"></span>
       </div>
 
-      <!-- FOOT NOTE -->
+      <!-- FOOT -->
       <div class="mt-6 rounded-xl2 border border-white/10 bg-black/20 px-4 py-3 text-[12px] text-muted">
-        🔄 Reconnexion automatique dès que le service est rétabli
+        🔄 Connexion automatique dès que le service est rétabli
       </div>
     </section>
   </main>
+
+  <script>
+    // Telegram Mini App safe init
+    try {
+      const tg = window.Telegram?.WebApp;
+      tg?.ready?.();
+      tg?.expand?.();
+      tg?.setHeaderColor?.("#05070D");
+      tg?.setBackgroundColor?.("#05070D");
+    } catch (e) {}
+  </script>
+
 </body>
+</html>
