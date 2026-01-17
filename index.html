@@ -4,13 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="color-scheme" content="dark" />
+  <title>SLR BOOST</title>
 
-  <title>SLR BOOST — Indisponible</title>
-
-  <!-- Telegram Mini App SDK -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <script>
@@ -19,48 +14,24 @@
       theme: {
         extend: {
           colors: {
-            bg0: '#05070D',
-            bg1: '#0B1020',
-            glass: 'rgba(255,255,255,.06)',
-            glass2: 'rgba(255,255,255,.09)',
-            stroke: 'rgba(255,255,255,.10)',
-            stroke2: 'rgba(255,255,255,.16)',
+            bg: '#05070D',
+            card: 'rgba(255,255,255,.04)',
+            stroke: 'rgba(255,255,255,.08)',
             text: 'rgba(250,253,255,.96)',
-            muted: 'rgba(250,253,255,.66)',
-            muted2: 'rgba(250,253,255,.48)',
-            accent: '#FFD400',
-            accent2: '#FFB800',
-            good: '#2EE59D',
-            bad: '#FF4D4D',
-            ink: 'rgba(12,16,26,.88)'
-          },
-          boxShadow: {
-            soft: '0 10px 26px rgba(0,0,0,.42)',
-            deep: '0 18px 60px rgba(0,0,0,.55)',
-            accent: '0 18px 34px rgba(255,212,0,.14)',
-            neon: '0 0 0 1px rgba(255,255,255,.06), 0 22px 70px rgba(0,0,0,.55)'
-          },
-          borderRadius: {
-            xl2: '18px',
-            xl3: '24px',
-            xl4: '28px'
+            muted: 'rgba(250,253,255,.55)',
+            accent: '#FFD400'
           },
           keyframes: {
-            floaty: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(28px)' } },
-            floaty2:{ '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(18px)' } },
-            floaty3:{ '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(34px)' } },
-            sweep: { '0%': { transform:'translateX(-65%)' }, '50%': { transform:'translateX(65%)' }, '100%': { transform:'translateX(-65%)' } },
-            sheen: { 'to': { transform: 'rotate(360deg)' } }
+            fade: {
+              '0%': { opacity: '0', transform: 'translateY(6px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            }
           },
           animation: {
-            floaty: 'floaty 14s ease-in-out infinite',
-            floaty2:'floaty2 17s ease-in-out infinite',
-            floaty3:'floaty3 19s ease-in-out infinite',
-            sweep: 'sweep 6s ease-in-out infinite',
-            sheen: 'sheen 3s linear infinite'
+            fade: 'fade .8s ease-out both'
           },
           fontFamily: {
-            ui: ['ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto','Helvetica','Arial']
+            ui: ['system-ui','-apple-system','Segoe UI','Roboto','Helvetica','Arial']
           }
         }
       }
@@ -68,78 +39,35 @@
   </script>
 </head>
 
-<body
-  class="min-h-screen overflow-hidden font-ui text-text
-         bg-[radial-gradient(1200px_800px_at_15%_0%,rgba(255,212,0,.14),transparent_60%),
-             radial-gradient(900px_600px_at_85%_20%,rgba(46,229,157,.10),transparent_55%),
-             radial-gradient(900px_700px_at_50%_110%,rgba(105,140,255,.10),transparent_60%),
-             linear-gradient(180deg,#05070D,#0B1020)]">
+<body class="min-h-screen bg-bg text-text font-ui">
 
-  <!-- FX ORBS -->
-  <div class="pointer-events-none fixed inset-0 z-0 overflow-hidden opacity-95">
-    <div class="absolute -left-[200px] -top-[240px] h-[600px] w-[600px] rounded-full blur-[50px] opacity-[.18] animate-floaty
-                bg-[radial-gradient(circle_at_35%_30%,rgba(255,212,0,.95),transparent_65%)]"></div>
-
-    <div class="absolute -right-[240px] top-[80px] h-[600px] w-[600px] rounded-full blur-[50px] opacity-[.16] animate-floaty2
-                bg-[radial-gradient(circle_at_40%_35%,rgba(46,229,157,.95),transparent_65%)]"></div>
-
-    <div class="absolute left-[20%] -bottom-[360px] h-[600px] w-[600px] rounded-full blur-[50px] opacity-[.16] animate-floaty3
-                bg-[radial-gradient(circle_at_50%_40%,rgba(105,140,255,.95),transparent_65%)]"></div>
-  </div>
-
-  <!-- CONTENT -->
-  <main class="relative z-10 flex min-h-screen items-center justify-center px-4">
+  <main class="flex min-h-screen items-center justify-center px-6">
     <section
-      class="relative w-full max-w-[520px] overflow-hidden rounded-xl4
-             border border-white/10 bg-white/5 p-6 text-center shadow-neon">
+      class="w-full max-w-[420px] rounded-2xl border border-stroke bg-card p-8 text-center animate-fade">
 
-      <!-- sweep light -->
-      <div class="pointer-events-none absolute inset-[-1px] opacity-60 animate-sweep
-                  bg-[linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent)]"></div>
-
-      <!-- ICON -->
-      <div class="relative mx-auto mb-4 flex h-[72px] w-[72px] items-center justify-center
-                  rounded-[22px] bg-gradient-to-br from-accent to-accent2 shadow-accent">
-        <div class="absolute inset-[-40%] opacity-60 animate-sheen
-                    bg-[conic-gradient(from_180deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0))]"></div>
-        <span class="relative text-[28px] font-black text-[#141414]">⚠️</span>
+      <!-- Logo / Signature -->
+      <div class="mb-6 text-[13px] font-black tracking-[.25em] text-muted">
+        SLR BOOST
       </div>
 
-      <!-- TITLE -->
-      <h1 class="text-[20px] font-black tracking-[.3px]">
-        Application temporairement indisponible
+      <!-- Message principal -->
+      <h1 class="text-[18px] font-black tracking-[.2px]">
+        Application indisponible
       </h1>
 
-      <!-- TEXT -->
-      <p class="mt-2 text-[13.5px] leading-snug text-muted">
-        SLR BOOST est actuellement en maintenance ou mise à jour.<br>
-        Merci de réessayer dans quelques instants.
+      <p class="mt-3 text-[13.5px] leading-relaxed text-muted">
+        L’application est temporairement indisponible.<br>
+        Elle sera de nouveau accessible prochainement.
       </p>
 
-      <!-- LOADER -->
-      <div class="mt-6 flex justify-center gap-2">
-        <span class="h-2.5 w-2.5 rounded-full bg-accent animate-pulse"></span>
-        <span class="h-2.5 w-2.5 rounded-full bg-accent2 animate-pulse [animation-delay:150ms]"></span>
-        <span class="h-2.5 w-2.5 rounded-full bg-accent animate-pulse [animation-delay:300ms]"></span>
+      <!-- Ligne de statut -->
+      <div class="mt-6 flex items-center justify-center gap-2 text-[12px] text-muted">
+        <span class="h-1.5 w-1.5 rounded-full bg-accent animate-pulse"></span>
+        <span>Statut : en cours</span>
       </div>
 
-      <!-- FOOT -->
-      <div class="mt-6 rounded-xl2 border border-white/10 bg-black/20 px-4 py-3 text-[12px] text-muted">
-        🔄 Connexion automatique dès que le service est rétabli
-      </div>
     </section>
   </main>
-
-  <script>
-    // Telegram Mini App safe init
-    try {
-      const tg = window.Telegram?.WebApp;
-      tg?.ready?.();
-      tg?.expand?.();
-      tg?.setHeaderColor?.("#05070D");
-      tg?.setBackgroundColor?.("#05070D");
-    } catch (e) {}
-  </script>
 
 </body>
 </html>
